@@ -18,6 +18,8 @@ SHARED_LIBRARY_SUFFIX = dylib
 PIC =
 #PIC = -fPIC
 
+DEBUG_OPT = -O0 -ggdb3 # -g #
+
 # Build the .fmu files for both co-simulation and model-exchange
 all:
 	chmod 777 build_fmu
@@ -36,7 +38,7 @@ all:
 
 %.o: %.c
 	echo `pwd`
-	$(CC) -g -c $(CBITSFLAGS) $(PIC) -Wall $(INCLUDE) $(CFLAGS) $< -o $@
+	$(CC) $(DEBUG_OPT) -c $(CBITSFLAGS) $(PIC) -Wall $(INCLUDE) $(CFLAGS) $< -o $@
 
 # Under Linux, compile with -fvisibility=hidden, see
 # https://www.gnu.org/software/gnulib/manual/html_node/Exported-Symbols-of-Shared-Libraries.html

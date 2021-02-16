@@ -7,6 +7,9 @@ ENDFUNCTION()
 
 project (FMUSDK)
 
+# set(CMAKE_CONFIGURATION_TYPES "Debug" CACHE STRING "" FORCE)
+# set(default_build_type "Debug")
+
 if (WIN32)
    set(FMI_PLATFORM win)
 elseif (APPLE)
@@ -148,6 +151,7 @@ if (WIN32)
   endif ()
 else ()
   set(TARGET_OUTPUT_NAME "${TARGET_NAME}")
+  set(CMAKE_CXX_FLAGS_DEBUG "-ggdb3 -O0" CACHE STRING "")
   target_link_libraries (${TARGET_NAME} PRIVATE "dl")
   target_link_libraries (${TARGET_NAME} PRIVATE "xml2")
   target_link_libraries (${TARGET_NAME} PRIVATE "expat")

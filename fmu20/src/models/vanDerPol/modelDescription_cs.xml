@@ -37,8 +37,8 @@
                   causality="local" variability="continuous" initial="calculated">
     <Real derivative="3"/>
   </ScalarVariable> 
-  <ScalarVariable name="mu" valueReference="4" causality="parameter"
-                  variability="fixed" initial="exact">
+  <ScalarVariable name="mu" valueReference="4" 
+                  causality="parameter" variability="fixed" initial="exact">
     <Real start="1"/>
   </ScalarVariable>
 </ModelVariables>
