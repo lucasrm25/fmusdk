@@ -21,6 +21,8 @@
  *
  * Author: Adrian Tirea
  * Copyright QTronic GmbH. All rights reserved.
+ * 
+ * Forked and further developed by Lucas Rath
  * ---------------------------------------------------------------------------*/
 
 #ifdef __cplusplus
@@ -63,6 +65,7 @@ static fmi2Boolean invalidNumber(ModelInstance *comp, const char *f, const char 
     return fmi2False;
 }
 
+// check whether statesExpected is set in comp->state. If true then raise error: f is a illegal call sequence
 static fmi2Boolean invalidState(ModelInstance *comp, const char *f, int statesExpected) {
     if (!comp)
         return fmi2True;
@@ -74,6 +77,7 @@ static fmi2Boolean invalidState(ModelInstance *comp, const char *f, int statesEx
     return fmi2False;
 }
 
+// check whether pointer p is null
 static fmi2Boolean nullPointer(ModelInstance* comp, const char *f, const char *arg, const void *p) {
     if (!p) {
         comp->state = modelError;
@@ -83,6 +87,7 @@ static fmi2Boolean nullPointer(ModelInstance* comp, const char *f, const char *a
     return fmi2False;
 }
 
+// check whether vr is out of range
 static fmi2Boolean vrOutOfRange(ModelInstance *comp, const char *f, fmi2ValueReference vr, int end) {
     if (vr >= end) {
         FILTERED_LOG(comp, fmi2Error, LOG_ERROR, "%s: Illegal value reference %u.", f, vr)
@@ -92,6 +97,7 @@ static fmi2Boolean vrOutOfRange(ModelInstance *comp, const char *f, fmi2ValueRef
     return fmi2False;
 }
 
+// raise error: fName is not implemented
 static fmi2Status unsupportedFunction(fmi2Component c, const char *fName, int statesExpected) {
     ModelInstance *comp = (ModelInstance *)c;
     fmi2CallbackLogger log = comp->functions->logger;
@@ -102,6 +108,7 @@ static fmi2Status unsupportedFunction(fmi2Component c, const char *fName, int st
     return fmi2Error;
 }
 
+// set String of only one variable. Calls fmi2SetString with 1 reference value.
 fmi2Status setString(fmi2Component comp, fmi2ValueReference vr, fmi2String value) {
     return fmi2SetString(comp, &vr, 1, &value);
 }
@@ -122,6 +129,8 @@ fmi2Boolean isCategoryLogged(ModelInstance *comp, int categoryIndex) {
 // ---------------------------------------------------------------------------
 // FMI functions
 // ---------------------------------------------------------------------------
+
+// instantiate a struct of our model containing all necessary variables for simulation
 fmi2Component fmi2Instantiate(fmi2String instanceName, fmi2Type fmuType, fmi2String fmuGUID,
                             fmi2String fmuResourceLocation, const fmi2CallbackFunctions *functions,
                             fmi2Boolean visible, fmi2Boolean loggingOn) {
@@ -130,7 +139,6 @@ fmi2Component fmi2Instantiate(fmi2String instanceName, fmi2Type fmuType, fmi2Str
     if (!functions->logger) {
         return NULL;
     }
-
     if (!functions->allocateMemory || !functions->freeMemory) {
         functions->logger(functions->componentEnvironment, instanceName, fmi2Error, "error",
                 "fmi2Instantiate: Missing callback function.");
@@ -151,48 +159,50 @@ fmi2Component fmi2Instantiate(fmi2String instanceName, fmi2Type fmuType, fmi2Str
                 "fmi2Instantiate: Wrong GUID %s. Expected %s.", fmuGUID, MODEL_GUID);
         return NULL;
     }
+    // allocate memory for our model instance
     comp = (ModelInstance *)functions->allocateMemory(1, sizeof(ModelInstance));
+    // allocate memory of the vectors inside our model instance
     if (comp) {
         int i;
-        comp->r = (fmi2Real *)   functions->allocateMemory(NUMBER_OF_REALS,    sizeof(fmi2Real));
-        comp->i = (fmi2Integer *)functions->allocateMemory(NUMBER_OF_INTEGERS, sizeof(fmi2Integer));
-        comp->b = (fmi2Boolean *)functions->allocateMemory(NUMBER_OF_BOOLEANS, sizeof(fmi2Boolean));
-        comp->s = (fmi2String *) functions->allocateMemory(NUMBER_OF_STRINGS,  sizeof(fmi2String));
-        comp->isPositive = (fmi2Boolean *)functions->allocateMemory(NUMBER_OF_EVENT_INDICATORS,
-            sizeof(fmi2Boolean));
-        comp->instanceName = (char *)functions->allocateMemory(1 + strlen(instanceName), sizeof(char));
-        comp->GUID = (char *)functions->allocateMemory(1 + strlen(fmuGUID), sizeof(char));
+        comp->r             = (fmi2Real *)   functions->allocateMemory(NUMBER_OF_REALS,             sizeof(fmi2Real));
+        comp->i             = (fmi2Integer *)functions->allocateMemory(NUMBER_OF_INTEGERS,          sizeof(fmi2Integer));
+        comp->b             = (fmi2Boolean *)functions->allocateMemory(NUMBER_OF_BOOLEANS,          sizeof(fmi2Boolean));
+        comp->s             = (fmi2String *) functions->allocateMemory(NUMBER_OF_STRINGS,           sizeof(fmi2String));
+        comp->isPositive    = (fmi2Boolean *)functions->allocateMemory(NUMBER_OF_EVENT_INDICATORS,  sizeof(fmi2Boolean));
+        comp->instanceName  = (char *)       functions->allocateMemory(1 + strlen(instanceName),    sizeof(char));
+        comp->GUID          = (char *)       functions->allocateMemory(1 + strlen(fmuGUID),         sizeof(char));
 
         // set all categories to on or off. fmi2SetDebugLogging should be called to choose specific categories.
         for (i = 0; i < NUMBER_OF_CATEGORIES; i++) {
             comp->logCategories[i] = loggingOn;
         }
     }
-    if (!comp || !comp->r || !comp->i || !comp->b || !comp->s || !comp->isPositive
-        || !comp->instanceName || !comp->GUID) {
-
+    // check if everything has been correctly allocated
+    if (!comp || !comp->r || !comp->i || !comp->b || !comp->s || !comp->isPositive || !comp->instanceName || !comp->GUID) {
         functions->logger(functions->componentEnvironment, instanceName, fmi2Error, "error",
             "fmi2Instantiate: Out of memory.");
         return NULL;
     }
-    comp->time = 0; // overwrite in fmi2SetupExperiment, fmi2SetTime
-    strcpy((char *)comp->instanceName, (char *)instanceName);
-    comp->type = fmuType;
-    strcpy((char *)comp->GUID, (char *)fmuGUID);
-    comp->functions = functions;
-    comp->componentEnvironment = functions->componentEnvironment;
-    comp->loggingOn = loggingOn;
-    comp->state = modelInstantiated;
-    setStartValues(comp); // to be implemented by the includer of this file
-    comp->isDirtyValues = fmi2True; // because we just called setStartValues
-    comp->isNewEventIteration = fmi2False;
 
-    comp->eventInfo.newDiscreteStatesNeeded = fmi2False;
-    comp->eventInfo.terminateSimulation = fmi2False;
-    comp->eventInfo.nominalsOfContinuousStatesChanged = fmi2False;
-    comp->eventInfo.valuesOfContinuousStatesChanged = fmi2False;
-    comp->eventInfo.nextEventTimeDefined = fmi2False;
-    comp->eventInfo.nextEventTime = 0;
+    // Fill model instance with inputs of this function
+    comp->time                  = 0;        // overwrite in fmi2SetupExperiment, fmi2SetTime
+    strcpy((char *)comp->instanceName, (char *)instanceName);
+    comp->type                  = fmuType;
+    strcpy((char *)comp->GUID, (char *)fmuGUID);
+    comp->functions             = functions;
+    comp->componentEnvironment  = functions->componentEnvironment;
+    comp->loggingOn             = loggingOn;
+    comp->state                 = modelInstantiated;
+    setStartValues(comp);                   // to be implemented by the includer of this file
+    comp->isDirtyValues         = fmi2True; // because we just called setStartValues
+    comp->isNewEventIteration   = fmi2False;
+
+    comp->eventInfo.newDiscreteStatesNeeded             = fmi2False;
+    comp->eventInfo.terminateSimulation                 = fmi2False;
+    comp->eventInfo.nominalsOfContinuousStatesChanged   = fmi2False;
+    comp->eventInfo.valuesOfContinuousStatesChanged     = fmi2False;
+    comp->eventInfo.nextEventTimeDefined                = fmi2False;
+    comp->eventInfo.nextEventTime                       = 0;
 
     FILTERED_LOG(comp, fmi2OK, LOG_FMI_CALL, "fmi2Instantiate: GUID=%s", fmuGUID)
 
@@ -244,6 +254,7 @@ fmi2Status fmi2ExitInitializationMode(fmi2Component c) {
     return fmi2OK;
 }
 
+// change state to terminated 
 fmi2Status fmi2Terminate(fmi2Component c) {
     ModelInstance *comp = (ModelInstance *)c;
     if (invalidState(comp, "fmi2Terminate", MASK_fmi2Terminate))
@@ -254,6 +265,7 @@ fmi2Status fmi2Terminate(fmi2Component c) {
     return fmi2OK;
 }
 
+// change state to modelInstantiated and reset model initial starting condition
 fmi2Status fmi2Reset(fmi2Component c) {
     ModelInstance* comp = (ModelInstance *)c;
     if (invalidState(comp, "fmi2Reset", MASK_fmi2Reset))
@@ -266,6 +278,7 @@ fmi2Status fmi2Reset(fmi2Component c) {
     return fmi2OK;
 }
 
+// release memory from our model
 void fmi2FreeInstance(fmi2Component c) {
     ModelInstance *comp = (ModelInstance *)c;
     if (!comp) return;
@@ -556,7 +569,6 @@ fmi2Status fmi2DeSerializeFMUstate (fmi2Component c, const fmi2Byte serializedSt
                                     fmi2FMUstate* FMUstate) {
     return unsupportedFunction(c, "fmi2DeSerializeFMUstate", MASK_fmi2DeSerializeFMUstate);
 }
-
 fmi2Status fmi2GetDirectionalDerivative(fmi2Component c, const fmi2ValueReference vUnknown_ref[], size_t nUnknown,
                                         const fmi2ValueReference vKnown_ref[] , size_t nKnown,
                                         const fmi2Real dvKnown[], fmi2Real dvUnknown[]) {
@@ -754,7 +766,8 @@ fmi2Status fmi2GetStringStatus(fmi2Component c, const fmi2StatusKind s, fmi2Stri
 // ---------------------------------------------------------------------------
 // Functions for FMI2 for Model Exchange
 // ---------------------------------------------------------------------------
-/* Enter and exit the different modes */
+
+// Enter and exit the different modes
 fmi2Status fmi2EnterEventMode(fmi2Component c) {
     ModelInstance *comp = (ModelInstance *)c;
     if (invalidState(comp, "fmi2EnterEventMode", MASK_fmi2EnterEventMode))

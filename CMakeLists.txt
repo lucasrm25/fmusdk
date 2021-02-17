@@ -5,11 +5,11 @@ FUNCTION(cat IN_FILE OUT_FILE)
   file(APPEND ${OUT_FILE} "${CONTENTS}")
 ENDFUNCTION()
 
-project (FMUSDK)
 
-# set(CMAKE_CONFIGURATION_TYPES "Debug" CACHE STRING "" FORCE)
-# set(default_build_type "Debug")
 
+project (FMUSDK C CXX)
+
+# check OS and processor type
 if (WIN32)
    set(FMI_PLATFORM win)
 elseif (APPLE)
@@ -17,35 +17,63 @@ elseif (APPLE)
 else ()
    set(FMI_PLATFORM linux)
 endif ()
-
 if ("${CMAKE_SIZEOF_VOID_P}" STREQUAL "8")
     set (FMI_PLATFORM ${FMI_PLATFORM}64)
 else ()
     set (FMI_PLATFORM ${FMI_PLATFORM}32)
 endif ()
-
 MESSAGE("FMI_PLATFORM: " ${FMI_PLATFORM})
 
-# --------------------- FMU models ---------------------
+
+# set debug options
+set(default_build_type "Debug")
+set (CMAKE_C_FLAGS_DEBUG "-ggdb3 -O0 ${CMAKE_C_FLAGS_DEBUG}") # -ftest-coverage -Wcoverage-mismatch 
+set (CMAKE_C_FLAGS_RELEASE "-O2 ${CMAKE_C_FLAGS_RELEASE}")
+# if("${CMAKE_GENERATOR}" MATCHES "Makefiles" OR 
+#   ("${CMAKE_GENERATOR}" MATCHES "Ninja" AND NOT WIN32))
+#   set(CMAKE_C_FLAGS_DEBUG "-ggdb3 -O0" CACHE STRING "")
+# endif()
+# set(CMAKE_BUILD_TYPE Debug)
+# set(CMAKE_CONFIGURATION_TYPES "Debug" CACHE STRING "" FORCE)
+
+
+# -------------------------------------------------------------------------------------
+# --------------------------------- FMU models ----------------------------------------
+# -------------------------------------------------------------------------------------
 foreach (FMI_VERSION 10 20)
 foreach (FMI_TYPE cs me)
 foreach (MODEL_NAME bouncingBall dq inc values vanDerPol)
 
+# define target name
 set(TARGET_NAME ${MODEL_NAME}_${FMI_VERSION}_${FMI_TYPE})
 
-add_library(${TARGET_NAME} SHARED fmu${FMI_VERSION}/src/models/${MODEL_NAME}/${MODEL_NAME}.c fmu${FMI_VERSION}/src/models/${MODEL_NAME}/modelDescription_${FMI_TYPE}.xml)
+# Adds a library target called <name> to be built from the source files listed in the command invocation.
+# SHARED libraries are linked dynamically and loaded at runtime
+# create FMU model library from source .c and xml files
+add_library(
+  ${TARGET_NAME} SHARED 
+  fmu${FMI_VERSION}/src/models/${MODEL_NAME}/${MODEL_NAME}.c 
+  fmu${FMI_VERSION}/src/models/${MODEL_NAME}/modelDescription_${FMI_TYPE}.xml
+)
 
+# Create the given directories and their parents as needed
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/dist/fmu${FMI_VERSION}/${FMI_TYPE})
 
+# Define DISABLE_PREFIX to build a binary FMU.
 target_compile_definitions(${TARGET_NAME} PRIVATE DISABLE_PREFIX)
 
+# Used only by FMI 1.0 
+# If FMI_COSIMULATION is defined, this implements "FMI for Co-Simulation 1.0",
+#  otherwise "FMI for Model Exchange 1.0".
 if (${FMI_TYPE} MATCHES "cs")
   target_compile_definitions(${TARGET_NAME} PRIVATE FMI_COSIMULATION)
 endif()
 
+# include libraries (FMU standard .h files and our FMU template)
 target_include_directories(${TARGET_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/models")
 target_include_directories(${TARGET_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/shared/include")
 
+# set building directory in a temp folder
 set(FMU_BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/temp/fmu${FMI_VERSION}/${FMI_TYPE}/${MODEL_NAME})
 
 set_target_properties(${TARGET_NAME} PROPERTIES
@@ -65,26 +93,31 @@ set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${MODEL_NAME})
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
-add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
+# After building project, copy source files to build directory and zip everything to a .fmu file
+add_custom_command(
+  TARGET ${TARGET_NAME} 
+  POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
   ${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/models/${MODEL_NAME}/modelDescription_${FMI_TYPE}.xml
   "${FMU_BUILD_DIR}/modelDescription.xml"
 )
-
-add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
+add_custom_command(
+  TARGET ${TARGET_NAME} POST_BUILD 
+  COMMAND ${CMAKE_COMMAND} -E copy
   "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/models/${MODEL_NAME}/${MODEL_NAME}.c"
   "${FMU_BUILD_DIR}/sources/${MODEL_NAME}.c"
 )
-
-add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
+add_custom_command(
+  TARGET ${TARGET_NAME} POST_BUILD 
+  COMMAND ${CMAKE_COMMAND} -E copy
   "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/models/fmuTemplate.c"
   "${FMU_BUILD_DIR}/sources/fmuTemplate.c"
 )
-
-add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
+add_custom_command(
+  TARGET ${TARGET_NAME} 
+  POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
   "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/models/fmuTemplate.h"
   "${FMU_BUILD_DIR}/sources/fmuTemplate.h"
 )
-
 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E tar "cfv" "${CMAKE_CURRENT_SOURCE_DIR}/dist/fmu${FMI_VERSION}/${FMI_TYPE}/${MODEL_NAME}.fmu" --format=zip
   "modelDescription.xml"
@@ -96,8 +129,15 @@ add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
 endforeach(MODEL_NAME)
 endforeach(FMI_TYPE)
 endforeach(FMI_VERSION)
+# -------------------------------------------------------------------------------------
+# --------------------------------- FMU models ----------------------------------------
+# -------------------------------------------------------------------------------------
 
-# --------------------- FMU simulators ---------------------
+
+
+# -------------------------------------------------------------------------------------
+# ----------------------------- FMU simulators ----------------------------------------
+# -------------------------------------------------------------------------------------
 foreach (FMI_VERSION 10 20)
 foreach (FMI_TYPE cs me)
 set(TARGET_NAME fmusim_${FMI_VERSION}_${FMI_TYPE})
@@ -123,7 +163,10 @@ else ()
     "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/shared/parser/XmlParserCApi.cpp")
 endif ()
 
-add_executable(${TARGET_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/${SIM_TYPE}/main.c" ${SRCS})
+add_executable(
+  ${TARGET_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/${SIM_TYPE}/main.c" 
+  ${SRCS}
+)
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/dist/fmu${FMI_VERSION}/${FMI_TYPE})
 
@@ -132,6 +175,7 @@ target_include_directories(${TARGET_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/f
 target_include_directories(${TARGET_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/shared/include")
 target_include_directories(${TARGET_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/shared/parser")
 
+# define code directives
 if (${FMI_TYPE} STREQUAL "cs")
   target_compile_definitions(${TARGET_NAME} PRIVATE FMI_COSIMULATION)
 endif ()
@@ -144,14 +188,12 @@ if (WIN32)
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
   set(CMAKE_C_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
   set(CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
-
   target_link_libraries (${TARGET_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/shared/parser/${FMI_PLATFORM}/libxml2.lib")
   if (${FMI_VERSION} EQUAL 10)
     target_link_libraries (${TARGET_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/shared/parser/${FMI_PLATFORM}/libexpatMT.lib")
   endif ()
 else ()
   set(TARGET_OUTPUT_NAME "${TARGET_NAME}")
-  set(CMAKE_CXX_FLAGS_DEBUG "-ggdb3 -O0" CACHE STRING "")
   target_link_libraries (${TARGET_NAME} PRIVATE "dl")
   target_link_libraries (${TARGET_NAME} PRIVATE "xml2")
   target_link_libraries (${TARGET_NAME} PRIVATE "expat")
@@ -179,8 +221,15 @@ add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E 
 
 endforeach(FMI_TYPE)
 endforeach(FMI_VERSION)
+# -------------------------------------------------------------------------------------
+# ----------------------------- FMU simulators ----------------------------------------
+# -------------------------------------------------------------------------------------
 
-# --------------------- test simulators and models ---------------------
+
+
+# -------------------------------------------------------------------------------------
+# --------------------- test simulators and models ------------------------------------
+# -------------------------------------------------------------------------------------
 enable_testing()
 foreach (FMI_VERSION 10 20)
 foreach (FMI_TYPE cs me)
@@ -199,4 +248,6 @@ set_tests_properties(${TEST_NAME} PROPERTIES ENVIRONMENT FMUSDK_HOME=${CMAKE_CUR
 endforeach(MODEL_NAME)
 endforeach(FMI_TYPE)
 endforeach(FMI_VERSION)
-
+# -------------------------------------------------------------------------------------
+# --------------------- test simulators and models ------------------------------------
+# -------------------------------------------------------------------------------------

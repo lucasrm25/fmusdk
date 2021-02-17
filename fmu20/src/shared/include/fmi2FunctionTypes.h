@@ -46,7 +46,7 @@
    - Nov. 14, 2011: First public Version
 
 
-   Copyright © 2011 MODELISAR consortium,
+   Copyright ï¿½ 2011 MODELISAR consortium,
                2012-2013 Modelica Association Project "FMI"
                All rights reserved.
    This file is licensed by the copyright holders under the BSD 2-Clause License
@@ -135,7 +135,7 @@ typedef struct {
 } fmi2CallbackFunctions;
 
 typedef struct {
-	 fmi2Boolean newDiscreteStatesNeeded;
+	fmi2Boolean newDiscreteStatesNeeded;
    fmi2Boolean terminateSimulation;
    fmi2Boolean nominalsOfContinuousStatesChanged;
    fmi2Boolean valuesOfContinuousStatesChanged;

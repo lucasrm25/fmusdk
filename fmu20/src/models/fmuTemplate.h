@@ -2,6 +2,8 @@
  * fmuTemplate.h
  * Definitions by the includer of this file
  * Copyright QTronic GmbH. All rights reserved.
+ * 
+ * Forked and further developed by Lucas Rath
  * ---------------------------------------------------------------------------*/
 
 #include <stdio.h>

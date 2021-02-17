@@ -86,6 +86,7 @@ fmi2Real getReal(ModelInstance* comp, fmi2ValueReference vr) {
 
 fmi2Real getEventIndicator(ModelInstance* comp, int z) {
     switch (z) {
+        // we only have one event
         case 0 : return r(h_) + (pos(0) ? EPS_INDICATORS : -EPS_INDICATORS);
         default: return 0;
     }
@@ -109,6 +110,7 @@ void eventUpdate(ModelInstance *comp, fmi2EventInfo *eventInfo, int isTimeEvent,
     
 	pos(0) = r(h_) > 0;
     
+    // change velocity sign
 	if (!pos(0)) {
 
         fmi2Real tempV = - r(e_) * prevV;

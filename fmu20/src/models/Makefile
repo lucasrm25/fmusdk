@@ -7,7 +7,9 @@ ARCH = darwin64
 
 # Either cs for co-simuluation or me for model exchange.
 CSORME = cs
-INCLUDE = -I../../co_simulation/include
+
+# fmi standard h files
+INCLUDE = -DDISABLE_PREFIX -I../../shared/include
 
 # The suffix for shared libraries.
 # dylib for Mac OS X, so for Linux

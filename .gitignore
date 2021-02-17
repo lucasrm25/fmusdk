@@ -33,5 +33,6 @@
 
 # Build artifacts
 build/
+debug/
 temp/
 dist/
