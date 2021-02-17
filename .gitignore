@@ -36,3 +36,6 @@ build/
 debug/
 temp/
 dist/
+
+# Temporary folders for extracting FMUs
+*fmuTmp*/
