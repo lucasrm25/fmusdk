@@ -1,1 +1,1 @@
-/usr/bin/cc -fPIC -g  -shared -Wl,-soname,bouncingBall.so -o ../temp/fmu10/cs/bouncingBall/binaries/linux64/bouncingBall.so CMakeFiles/bouncingBall_10_cs.dir/fmu10/src/models/bouncingBall/bouncingBall.c.o 
+/usr/bin/cc -fPIC -ggdb3 -O0 -g  -shared -Wl,-soname,bouncingBall.so -o ../temp/fmu10/cs/bouncingBall/binaries/linux64/bouncingBall.so CMakeFiles/bouncingBall_10_cs.dir/fmu10/src/models/bouncingBall/bouncingBall.c.o 

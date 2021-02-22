@@ -1,1 +1,1 @@
-/usr/bin/cc -fPIC -g  -shared -Wl,-soname,values.so -o ../temp/fmu10/cs/values/binaries/linux64/values.so CMakeFiles/values_10_cs.dir/fmu10/src/models/values/values.c.o 
+/usr/bin/cc -fPIC -ggdb3 -O0 -g  -shared -Wl,-soname,values.so -o ../temp/fmu10/cs/values/binaries/linux64/values.so CMakeFiles/values_10_cs.dir/fmu10/src/models/values/values.c.o 

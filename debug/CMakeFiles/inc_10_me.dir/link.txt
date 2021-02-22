@@ -1,1 +1,1 @@
-/usr/bin/cc -fPIC -g  -shared -Wl,-soname,inc.so -o ../temp/fmu10/me/inc/binaries/linux64/inc.so CMakeFiles/inc_10_me.dir/fmu10/src/models/inc/inc.c.o 
+/usr/bin/cc -fPIC -ggdb3 -O0 -g  -shared -Wl,-soname,inc.so -o ../temp/fmu10/me/inc/binaries/linux64/inc.so CMakeFiles/inc_10_me.dir/fmu10/src/models/inc/inc.c.o 

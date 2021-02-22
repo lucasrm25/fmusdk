@@ -3,7 +3,7 @@
 
 # compile C with /usr/bin/cc
 # compile CXX with /usr/bin/c++
-C_FLAGS = -g  
+C_FLAGS = -ggdb3 -O0 -g  
 
 C_DEFINES = -DFMI_COSIMULATION -DLIBXML_STATIC -DSTANDALONE_XML_PARSER
 

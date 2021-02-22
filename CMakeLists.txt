@@ -10,31 +10,17 @@ ENDFUNCTION()
 project (FMUSDK C CXX)
 
 # check OS and processor type
-if (WIN32)
-   set(FMI_PLATFORM win)
-elseif (APPLE)
-   set(FMI_PLATFORM darwin)
-else ()
-   set(FMI_PLATFORM linux)
-endif ()
-if ("${CMAKE_SIZEOF_VOID_P}" STREQUAL "8")
-    set (FMI_PLATFORM ${FMI_PLATFORM}64)
-else ()
-    set (FMI_PLATFORM ${FMI_PLATFORM}32)
-endif ()
-MESSAGE("FMI_PLATFORM: " ${FMI_PLATFORM})
+if (NOT UNIX AND NOT "${CMAKE_SIZEOF_VOID_P}" STREQUAL "8")
+  MESSAGE("Only UNIX64 platform is supported for compilation")
+  return()
+endif()
+set (FMI_PLATFORM linux64)
 
 
 # set debug options
 set(default_build_type "Debug")
-set (CMAKE_C_FLAGS_DEBUG "-ggdb3 -O0 ${CMAKE_C_FLAGS_DEBUG}") # -ftest-coverage -Wcoverage-mismatch 
+set (CMAKE_C_FLAGS_DEBUG "-ggdb3 -O0 ${CMAKE_C_FLAGS_DEBUG}")
 set (CMAKE_C_FLAGS_RELEASE "-O2 ${CMAKE_C_FLAGS_RELEASE}")
-# if("${CMAKE_GENERATOR}" MATCHES "Makefiles" OR 
-#   ("${CMAKE_GENERATOR}" MATCHES "Ninja" AND NOT WIN32))
-#   set(CMAKE_C_FLAGS_DEBUG "-ggdb3 -O0" CACHE STRING "")
-# endif()
-# set(CMAKE_BUILD_TYPE Debug)
-# set(CMAKE_CONFIGURATION_TYPES "Debug" CACHE STRING "" FORCE)
 
 
 # -------------------------------------------------------------------------------------
@@ -42,7 +28,7 @@ set (CMAKE_C_FLAGS_RELEASE "-O2 ${CMAKE_C_FLAGS_RELEASE}")
 # -------------------------------------------------------------------------------------
 foreach (FMI_VERSION 10 20)
 foreach (FMI_TYPE cs me)
-foreach (MODEL_NAME bouncingBall dq inc values vanDerPol)
+foreach (MODEL_NAME bouncingBall dq inc values vanDerPol) # springDamper
 
 # define target name
 set(TARGET_NAME ${MODEL_NAME}_${FMI_VERSION}_${FMI_TYPE})
@@ -182,22 +168,11 @@ endif ()
 target_compile_definitions(${TARGET_NAME} PRIVATE STANDALONE_XML_PARSER)
 target_compile_definitions(${TARGET_NAME} PRIVATE LIBXML_STATIC)
 
-if (WIN32)
-  set(TARGET_OUTPUT_NAME "${TARGET_NAME}.exe")
-  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
-  set(CMAKE_C_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-  set(CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
-  target_link_libraries (${TARGET_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/shared/parser/${FMI_PLATFORM}/libxml2.lib")
-  if (${FMI_VERSION} EQUAL 10)
-    target_link_libraries (${TARGET_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/shared/parser/${FMI_PLATFORM}/libexpatMT.lib")
-  endif ()
-else ()
-  set(TARGET_OUTPUT_NAME "${TARGET_NAME}")
-  target_link_libraries (${TARGET_NAME} PRIVATE "dl")
-  target_link_libraries (${TARGET_NAME} PRIVATE "xml2")
-  target_link_libraries (${TARGET_NAME} PRIVATE "expat")
-endif ()
+
+set(TARGET_OUTPUT_NAME "${TARGET_NAME}")
+target_link_libraries (${TARGET_NAME} PRIVATE "dl")
+target_link_libraries (${TARGET_NAME} PRIVATE "xml2")
+target_link_libraries (${TARGET_NAME} PRIVATE "expat")
 
 
 set(FMU_BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/temp/fmu${FMI_VERSION}/${FMI_TYPE})
@@ -233,7 +208,7 @@ endforeach(FMI_VERSION)
 enable_testing()
 foreach (FMI_VERSION 10 20)
 foreach (FMI_TYPE cs me)
-foreach (MODEL_NAME bouncingBall dq inc values vanDerPol)
+foreach (MODEL_NAME bouncingBall dq inc values vanDerPol) # springDamper
 
 set(FMU_BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/temp/fmu${FMI_VERSION}/${FMI_TYPE})
 set(TEST_NAME test_${MODEL_NAME}_${FMI_VERSION}_${FMI_TYPE})
