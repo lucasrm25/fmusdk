@@ -36,14 +36,14 @@
         </ScalarVariable>
 
         <!-- index 3 -->  
-        <ScalarVariable name="Ri_rx_MiMj" 
+        <ScalarVariable name="Ri_ry_MiMj" 
             valueReference="2" description="y distance from P to S in Rp coordinates" 
             causality="input" variability="continuous">
             <Real start="0." />
         </ScalarVariable>
 
         <!-- index 4 -->  
-        <ScalarVariable name="Ri_rx_MiMj" 
+        <ScalarVariable name="Ri_rz_MiMj" 
             valueReference="3" description="z distance from P to S in Rp coordinates" 
             causality="input" variability="continuous">
             <Real start="0." />
