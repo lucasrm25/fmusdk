@@ -71,8 +71,8 @@ static fmi2Boolean invalidState(ModelInstance *comp, const char *f, int statesEx
     if (!comp)
         return fmi2True;
     if (!(comp->state & statesExpected)) {
-        comp->state = modelError;
         FILTERED_LOG(comp, fmi2Error, LOG_ERROR, "%s: Illegal call sequence. Current state: %d", f, comp->state)
+        comp->state = modelError;
         return fmi2True;
     }
     return fmi2False;
