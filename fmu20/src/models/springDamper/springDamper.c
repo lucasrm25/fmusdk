@@ -45,9 +45,6 @@ void setStartValues(ModelInstance *comp) {
     r(I_rx_PS_) = 0;
     r(I_ry_PS_) = 0;
     r(I_rz_PS_) = 0;
-    r(I_Fx_P_)  = 0;
-    r(I_Fy_P_)  = 0;
-    r(I_Fz_P_)  = 0;
 }
 
 // called by fmi2GetReal, fmi2GetInteger, fmi2GetBoolean, fmi2GetString, fmi2ExitInitialization
