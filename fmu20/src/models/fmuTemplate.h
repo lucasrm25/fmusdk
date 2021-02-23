@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
+#include <math.h>
 
 // C-code FMUs have functions names prefixed with MODEL_IDENTIFIER_.
 // Define DISABLE_PREFIX to build a binary FMU.

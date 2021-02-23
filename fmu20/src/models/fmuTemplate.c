@@ -31,7 +31,8 @@ extern "C" {
 
 // macro to be used to log messages. The macro check if current 
 // log category is valid and, if true, call the logger provided by simulator.
-#define FILTERED_LOG(instance, status, categoryIndex, message, ...) if (status == fmi2Error || status == fmi2Fatal || isCategoryLogged(instance, categoryIndex)) \
+#define FILTERED_LOG(instance, status, categoryIndex, message, ...) \
+        if (status == fmi2Error || status == fmi2Fatal || isCategoryLogged(instance, categoryIndex)) \
         instance->functions->logger(instance->functions->componentEnvironment, instance->instanceName, status, \
         logCategoriesNames[categoryIndex], message, ##__VA_ARGS__);
 
@@ -58,8 +59,8 @@ fmi2Boolean isCategoryLogged(ModelInstance *comp, int categoryIndex);
 
 static fmi2Boolean invalidNumber(ModelInstance *comp, const char *f, const char *arg, int n, int nExpected) {
     if (n != nExpected) {
-        comp->state = modelError;
         FILTERED_LOG(comp, fmi2Error, LOG_ERROR, "%s: Invalid argument %s = %d. Expected %d.", f, arg, n, nExpected)
+        comp->state = modelError;
         return fmi2True;
     }
     return fmi2False;

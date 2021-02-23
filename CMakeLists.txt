@@ -75,7 +75,7 @@ foreach(MODEL ${MODELS})
   target_include_directories(${TARGET_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/shared/include")
 
   # LIBS = -lm -lgsl -lgslcblas
-  # target_link_libraries (${TARGET_NAME} PRIVATE "m")
+  target_link_libraries (${TARGET_NAME} PRIVATE "m")
   # target_link_libraries (${TARGET_NAME} PRIVATE "gsl")
   # target_link_libraries (${TARGET_NAME} PRIVATE "gslcblas")
 

@@ -227,6 +227,12 @@ FMUSDK_BINARY_DIR:STATIC=/home/lucas/Desktop/11_Github/FMI/fmusdk/debug
 //Value Computed by CMake
 FMUSDK_SOURCE_DIR:STATIC=/home/lucas/Desktop/11_Github/FMI/fmusdk
 
+//Dependencies for the target
+dq_20_me_LIB_DEPENDS:STATIC=general;m;
+
+//Dependencies for the target
+springDamper_20_me_LIB_DEPENDS:STATIC=general;m;
+
 
 ########################
 # INTERNAL cache entries
