@@ -54,21 +54,21 @@
         <ScalarVariable name="Ri_Fx_Mi" 
             valueReference="4" description="Ri_Fx_Mi" 
             causality="output" variability="continuous" initial="calculated">
-            <Real start="0." />
+            <Real/>
         </ScalarVariable>
 
         <!-- index 6 --> 
         <ScalarVariable name="Ri_Fy_Mi" 
             valueReference="5" description="Ri_Fy_Mi" 
             causality="output" variability="continuous" initial="calculated">
-            <Real start="0." />
+            <Real/>
         </ScalarVariable>
 
         <!-- index 7 --> 
         <ScalarVariable name="Ri_Fz_Mi" 
             valueReference="6" description="Ri_Fz_Mi" 
             causality="output" variability="continuous" initial="calculated">
-            <Real start="0." />
+            <Real/>
         </ScalarVariable>
 
     </ModelVariables>
