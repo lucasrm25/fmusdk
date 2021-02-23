@@ -30,7 +30,7 @@ project (FMUSDK C CXX)
 # --------------------------------- FMU models ----------------------------------------
 # -------------------------------------------------------------------------------------
 
-MESSAGE("\n * ********* Starting compilation of FMU models ************")
+MESSAGE("\n * ********* Setting up compilation for FMU models ************")
 
 list(APPEND MODEL1 20 me springDamper)
 list(APPEND MODEL2 20 me dq)
@@ -148,7 +148,7 @@ endforeach(MODEL)
 # -------------------------------------------------------------------------------------
 # ----------------------------- FMU simulators ----------------------------------------
 # -------------------------------------------------------------------------------------
-MESSAGE("\n\n * ********* Starting compilation of FMU simulators ************")
+MESSAGE("\n\n * ********* Setting up compilation for FMU simulators ************")
 
 foreach (FMI_VERSION 10 20)
 foreach (FMI_TYPE cs me)
@@ -236,23 +236,32 @@ MESSAGE("")
 # --------------------- test simulators and models ------------------------------------
 # -------------------------------------------------------------------------------------
 enable_testing()
-foreach (FMI_VERSION 10 20)
-foreach (FMI_TYPE cs me)
-foreach (MODEL_NAME bouncingBall dq inc values vanDerPol) # springDamper
 
-set(FMU_BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/temp/fmu${FMI_VERSION}/${FMI_TYPE})
-set(TEST_NAME test_${MODEL_NAME}_${FMI_VERSION}_${FMI_TYPE})
+foreach(MODEL ${MODELS})
+  LIST(GET ${MODEL} 0 FMI_VERSION)
+  LIST(GET ${MODEL} 1 FMI_TYPE)
+  LIST(GET ${MODEL} 2 MODEL_NAME)
 
-add_test(NAME ${TEST_NAME}
-	COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/dist/fmu${FMI_VERSION}/${FMI_TYPE}/fmusim_${FMI_VERSION}_${FMI_TYPE}"
-			"${CMAKE_CURRENT_SOURCE_DIR}/dist/fmu${FMI_VERSION}/${FMI_TYPE}/${MODEL_NAME}.fmu"
-	WORKING_DIRECTORY "${FMU_BUILD_DIR}/${MODEL_NAME}"
-)
-set_tests_properties(${TEST_NAME} PROPERTIES ENVIRONMENT FMUSDK_HOME=${CMAKE_CURRENT_SOURCE_DIR})
+  set(FMU_BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/temp/fmu${FMI_VERSION}/${FMI_TYPE})
+  set(TEST_NAME test_${MODEL_NAME}_${FMI_VERSION}_${FMI_TYPE})
+
+  add_test(NAME ${TEST_NAME}
+    COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/dist/fmu${FMI_VERSION}/${FMI_TYPE}/fmusim_${FMI_VERSION}_${FMI_TYPE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/dist/fmu${FMI_VERSION}/${FMI_TYPE}/${MODEL_NAME}.fmu"
+    WORKING_DIRECTORY "${FMU_BUILD_DIR}/${MODEL_NAME}"
+  )
+  set_tests_properties(${TEST_NAME} PROPERTIES ENVIRONMENT FMUSDK_HOME=${CMAKE_CURRENT_SOURCE_DIR})
  
-endforeach(MODEL_NAME)
-endforeach(FMI_TYPE)
-endforeach(FMI_VERSION)
+endforeach(MODEL)
+
+
+# foreach (FMI_VERSION 10 20)
+# foreach (FMI_TYPE cs me)
+# foreach (MODEL_NAME bouncingBall dq inc values vanDerPol) # springDamper
+
+# endforeach(MODEL_NAME)
+# endforeach(FMI_TYPE)
+# endforeach(FMI_VERSION)
 # -------------------------------------------------------------------------------------
 # --------------------- test simulators and models ------------------------------------
 # -------------------------------------------------------------------------------------
