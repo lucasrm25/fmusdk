@@ -58,10 +58,16 @@ void calculateValues(ModelInstance *comp) {
     //  initialization code here
     //  set first time event, if any, using comp->eventInfo.nextEventTime
     //}
+
+    /****************** Spring forces ********************/
+    r(I_Fx_P_) = r(k_) * r(I_rx_PS_);
+    r(I_Fy_P_) = r(k_) * r(I_ry_PS_);
+    r(I_Fz_P_) = r(k_) * r(I_rz_PS_);
 }
 
 // called by fmi2GetReal, fmi2GetContinuousStates and fmi2GetDerivatives
 fmi2Real getReal(ModelInstance *comp, fmi2ValueReference vr){
+    // all values are real at the moment
     return r(vr);
 }
 

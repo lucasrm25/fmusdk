@@ -875,6 +875,8 @@ fmi2Status fmi2GetDerivatives(fmi2Component c, fmi2Real derivatives[], size_t nx
         return fmi2Error;
 #if NUMBER_OF_STATES>0
     for (i = 0; i < nx; i++) {
+        // convention of this template: if k is the vr of a real state, 
+        // then k+1 is the vr of its derivative
         fmi2ValueReference vr = vrStates[i] + 1;
         derivatives[i] = getReal(comp, vr); // to be implemented by the includer of this file
         FILTERED_LOG(comp, fmi2OK, LOG_FMI_CALL, "fmi2GetDerivatives: #r%d# = %.16g", vr, derivatives[i])
