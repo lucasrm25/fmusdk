@@ -228,10 +228,10 @@ FMUSDK_BINARY_DIR:STATIC=/home/lucas/Desktop/11_Github/FMI/fmusdk/debug
 FMUSDK_SOURCE_DIR:STATIC=/home/lucas/Desktop/11_Github/FMI/fmusdk
 
 //Dependencies for the target
-dq_20_me_LIB_DEPENDS:STATIC=general;m;
+dq_20_me_LIB_DEPENDS:STATIC=general;m;general;gsl;general;gslcblas;
 
 //Dependencies for the target
-springDamper_20_me_LIB_DEPENDS:STATIC=general;m;
+springDamper_20_me_LIB_DEPENDS:STATIC=general;m;general;gsl;general;gslcblas;
 
 
 ########################

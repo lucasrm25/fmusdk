@@ -71,6 +71,13 @@
             <Real/>
         </ScalarVariable>
 
+        <!-- index 8 --> 
+        <ScalarVariable name="Ri_F_Mi_abs" 
+            valueReference="6" description="Ri_F_Mi_abs" 
+            causality="output" variability="continuous" initial="calculated">
+            <Real/>
+        </ScalarVariable>
+
     </ModelVariables>
 
     <ModelStructure>
@@ -78,11 +85,13 @@
             <Unknown index="5" />
             <Unknown index="6" />
             <Unknown index="7" />
+            <Unknown index="8" />
         </Outputs>
         <InitialUnknowns>
             <Unknown index="5" />
             <Unknown index="6" />
             <Unknown index="7" />
+            <Unknown index="8" />
         </InitialUnknowns>
     </ModelStructure>
 

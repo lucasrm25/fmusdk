@@ -1,1 +1,1 @@
-/usr/bin/cc -fPIC   -shared -Wl,-soname,dq.so -o ../temp/fmu20/me/dq/binaries/linux64/dq.so CMakeFiles/dq_20_me.dir/fmu20/src/models/dq/dq.c.o -lm 
+/usr/bin/cc -fPIC   -shared -Wl,-soname,dq.so -o ../temp/fmu20/me/dq/binaries/linux64/dq.so CMakeFiles/dq_20_me.dir/fmu20/src/models/dq/dq.c.o -lm -lgsl -lgslcblas 
