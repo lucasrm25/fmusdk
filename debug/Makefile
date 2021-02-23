@@ -122,17 +122,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named fmusim_20_me
+# Target rules for targets named dq_20_me
 
 # Build rule for target.
-fmusim_20_me: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 fmusim_20_me
-.PHONY : fmusim_20_me
+dq_20_me: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 dq_20_me
+.PHONY : dq_20_me
 
 # fast build rule for target.
-fmusim_20_me/fast:
-	$(MAKE) -f CMakeFiles/fmusim_20_me.dir/build.make CMakeFiles/fmusim_20_me.dir/build
-.PHONY : fmusim_20_me/fast
+dq_20_me/fast:
+	$(MAKE) -f CMakeFiles/dq_20_me.dir/build.make CMakeFiles/dq_20_me.dir/build
+.PHONY : dq_20_me/fast
 
 #=============================================================================
 # Target rules for targets named fmusim_10_me
@@ -148,56 +148,30 @@ fmusim_10_me/fast:
 .PHONY : fmusim_10_me/fast
 
 #=============================================================================
-# Target rules for targets named vanDerPol_20_me
+# Target rules for targets named fmusim_20_me
 
 # Build rule for target.
-vanDerPol_20_me: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 vanDerPol_20_me
-.PHONY : vanDerPol_20_me
+fmusim_20_me: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 fmusim_20_me
+.PHONY : fmusim_20_me
 
 # fast build rule for target.
-vanDerPol_20_me/fast:
-	$(MAKE) -f CMakeFiles/vanDerPol_20_me.dir/build.make CMakeFiles/vanDerPol_20_me.dir/build
-.PHONY : vanDerPol_20_me/fast
+fmusim_20_me/fast:
+	$(MAKE) -f CMakeFiles/fmusim_20_me.dir/build.make CMakeFiles/fmusim_20_me.dir/build
+.PHONY : fmusim_20_me/fast
 
 #=============================================================================
-# Target rules for targets named values_20_me
+# Target rules for targets named springDamper_20_me
 
 # Build rule for target.
-values_20_me: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 values_20_me
-.PHONY : values_20_me
+springDamper_20_me: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 springDamper_20_me
+.PHONY : springDamper_20_me
 
 # fast build rule for target.
-values_20_me/fast:
-	$(MAKE) -f CMakeFiles/values_20_me.dir/build.make CMakeFiles/values_20_me.dir/build
-.PHONY : values_20_me/fast
-
-#=============================================================================
-# Target rules for targets named inc_20_me
-
-# Build rule for target.
-inc_20_me: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 inc_20_me
-.PHONY : inc_20_me
-
-# fast build rule for target.
-inc_20_me/fast:
-	$(MAKE) -f CMakeFiles/inc_20_me.dir/build.make CMakeFiles/inc_20_me.dir/build
-.PHONY : inc_20_me/fast
-
-#=============================================================================
-# Target rules for targets named bouncingBall_10_me
-
-# Build rule for target.
-bouncingBall_10_me: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 bouncingBall_10_me
-.PHONY : bouncingBall_10_me
-
-# fast build rule for target.
-bouncingBall_10_me/fast:
-	$(MAKE) -f CMakeFiles/bouncingBall_10_me.dir/build.make CMakeFiles/bouncingBall_10_me.dir/build
-.PHONY : bouncingBall_10_me/fast
+springDamper_20_me/fast:
+	$(MAKE) -f CMakeFiles/springDamper_20_me.dir/build.make CMakeFiles/springDamper_20_me.dir/build
+.PHONY : springDamper_20_me/fast
 
 #=============================================================================
 # Target rules for targets named fmusim_10_cs
@@ -213,175 +187,6 @@ fmusim_10_cs/fast:
 .PHONY : fmusim_10_cs/fast
 
 #=============================================================================
-# Target rules for targets named dq_20_me
-
-# Build rule for target.
-dq_20_me: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 dq_20_me
-.PHONY : dq_20_me
-
-# fast build rule for target.
-dq_20_me/fast:
-	$(MAKE) -f CMakeFiles/dq_20_me.dir/build.make CMakeFiles/dq_20_me.dir/build
-.PHONY : dq_20_me/fast
-
-#=============================================================================
-# Target rules for targets named bouncingBall_20_cs
-
-# Build rule for target.
-bouncingBall_20_cs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 bouncingBall_20_cs
-.PHONY : bouncingBall_20_cs
-
-# fast build rule for target.
-bouncingBall_20_cs/fast:
-	$(MAKE) -f CMakeFiles/bouncingBall_20_cs.dir/build.make CMakeFiles/bouncingBall_20_cs.dir/build
-.PHONY : bouncingBall_20_cs/fast
-
-#=============================================================================
-# Target rules for targets named dq_20_cs
-
-# Build rule for target.
-dq_20_cs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 dq_20_cs
-.PHONY : dq_20_cs
-
-# fast build rule for target.
-dq_20_cs/fast:
-	$(MAKE) -f CMakeFiles/dq_20_cs.dir/build.make CMakeFiles/dq_20_cs.dir/build
-.PHONY : dq_20_cs/fast
-
-#=============================================================================
-# Target rules for targets named inc_10_cs
-
-# Build rule for target.
-inc_10_cs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 inc_10_cs
-.PHONY : inc_10_cs
-
-# fast build rule for target.
-inc_10_cs/fast:
-	$(MAKE) -f CMakeFiles/inc_10_cs.dir/build.make CMakeFiles/inc_10_cs.dir/build
-.PHONY : inc_10_cs/fast
-
-#=============================================================================
-# Target rules for targets named vanDerPol_20_cs
-
-# Build rule for target.
-vanDerPol_20_cs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 vanDerPol_20_cs
-.PHONY : vanDerPol_20_cs
-
-# fast build rule for target.
-vanDerPol_20_cs/fast:
-	$(MAKE) -f CMakeFiles/vanDerPol_20_cs.dir/build.make CMakeFiles/vanDerPol_20_cs.dir/build
-.PHONY : vanDerPol_20_cs/fast
-
-#=============================================================================
-# Target rules for targets named bouncingBall_20_me
-
-# Build rule for target.
-bouncingBall_20_me: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 bouncingBall_20_me
-.PHONY : bouncingBall_20_me
-
-# fast build rule for target.
-bouncingBall_20_me/fast:
-	$(MAKE) -f CMakeFiles/bouncingBall_20_me.dir/build.make CMakeFiles/bouncingBall_20_me.dir/build
-.PHONY : bouncingBall_20_me/fast
-
-#=============================================================================
-# Target rules for targets named values_10_cs
-
-# Build rule for target.
-values_10_cs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 values_10_cs
-.PHONY : values_10_cs
-
-# fast build rule for target.
-values_10_cs/fast:
-	$(MAKE) -f CMakeFiles/values_10_cs.dir/build.make CMakeFiles/values_10_cs.dir/build
-.PHONY : values_10_cs/fast
-
-#=============================================================================
-# Target rules for targets named bouncingBall_10_cs
-
-# Build rule for target.
-bouncingBall_10_cs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 bouncingBall_10_cs
-.PHONY : bouncingBall_10_cs
-
-# fast build rule for target.
-bouncingBall_10_cs/fast:
-	$(MAKE) -f CMakeFiles/bouncingBall_10_cs.dir/build.make CMakeFiles/bouncingBall_10_cs.dir/build
-.PHONY : bouncingBall_10_cs/fast
-
-#=============================================================================
-# Target rules for targets named dq_10_cs
-
-# Build rule for target.
-dq_10_cs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 dq_10_cs
-.PHONY : dq_10_cs
-
-# fast build rule for target.
-dq_10_cs/fast:
-	$(MAKE) -f CMakeFiles/dq_10_cs.dir/build.make CMakeFiles/dq_10_cs.dir/build
-.PHONY : dq_10_cs/fast
-
-#=============================================================================
-# Target rules for targets named values_20_cs
-
-# Build rule for target.
-values_20_cs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 values_20_cs
-.PHONY : values_20_cs
-
-# fast build rule for target.
-values_20_cs/fast:
-	$(MAKE) -f CMakeFiles/values_20_cs.dir/build.make CMakeFiles/values_20_cs.dir/build
-.PHONY : values_20_cs/fast
-
-#=============================================================================
-# Target rules for targets named vanDerPol_10_cs
-
-# Build rule for target.
-vanDerPol_10_cs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 vanDerPol_10_cs
-.PHONY : vanDerPol_10_cs
-
-# fast build rule for target.
-vanDerPol_10_cs/fast:
-	$(MAKE) -f CMakeFiles/vanDerPol_10_cs.dir/build.make CMakeFiles/vanDerPol_10_cs.dir/build
-.PHONY : vanDerPol_10_cs/fast
-
-#=============================================================================
-# Target rules for targets named dq_10_me
-
-# Build rule for target.
-dq_10_me: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 dq_10_me
-.PHONY : dq_10_me
-
-# fast build rule for target.
-dq_10_me/fast:
-	$(MAKE) -f CMakeFiles/dq_10_me.dir/build.make CMakeFiles/dq_10_me.dir/build
-.PHONY : dq_10_me/fast
-
-#=============================================================================
-# Target rules for targets named inc_10_me
-
-# Build rule for target.
-inc_10_me: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 inc_10_me
-.PHONY : inc_10_me
-
-# fast build rule for target.
-inc_10_me/fast:
-	$(MAKE) -f CMakeFiles/inc_10_me.dir/build.make CMakeFiles/inc_10_me.dir/build
-.PHONY : inc_10_me/fast
-
-#=============================================================================
 # Target rules for targets named fmusim_20_cs
 
 # Build rule for target.
@@ -393,45 +198,6 @@ fmusim_20_cs: cmake_check_build_system
 fmusim_20_cs/fast:
 	$(MAKE) -f CMakeFiles/fmusim_20_cs.dir/build.make CMakeFiles/fmusim_20_cs.dir/build
 .PHONY : fmusim_20_cs/fast
-
-#=============================================================================
-# Target rules for targets named values_10_me
-
-# Build rule for target.
-values_10_me: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 values_10_me
-.PHONY : values_10_me
-
-# fast build rule for target.
-values_10_me/fast:
-	$(MAKE) -f CMakeFiles/values_10_me.dir/build.make CMakeFiles/values_10_me.dir/build
-.PHONY : values_10_me/fast
-
-#=============================================================================
-# Target rules for targets named vanDerPol_10_me
-
-# Build rule for target.
-vanDerPol_10_me: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 vanDerPol_10_me
-.PHONY : vanDerPol_10_me
-
-# fast build rule for target.
-vanDerPol_10_me/fast:
-	$(MAKE) -f CMakeFiles/vanDerPol_10_me.dir/build.make CMakeFiles/vanDerPol_10_me.dir/build
-.PHONY : vanDerPol_10_me/fast
-
-#=============================================================================
-# Target rules for targets named inc_20_cs
-
-# Build rule for target.
-inc_20_cs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 inc_20_cs
-.PHONY : inc_20_cs
-
-# fast build rule for target.
-inc_20_cs/fast:
-	$(MAKE) -f CMakeFiles/inc_20_cs.dir/build.make CMakeFiles/inc_20_cs.dir/build
-.PHONY : inc_20_cs/fast
 
 fmu10/src/co_simulation/main.o: fmu10/src/co_simulation/main.c.o
 
@@ -486,156 +252,6 @@ fmu10/src/model_exchange/main.s: fmu10/src/model_exchange/main.c.s
 fmu10/src/model_exchange/main.c.s:
 	$(MAKE) -f CMakeFiles/fmusim_10_me.dir/build.make CMakeFiles/fmusim_10_me.dir/fmu10/src/model_exchange/main.c.s
 .PHONY : fmu10/src/model_exchange/main.c.s
-
-fmu10/src/models/bouncingBall/bouncingBall.o: fmu10/src/models/bouncingBall/bouncingBall.c.o
-
-.PHONY : fmu10/src/models/bouncingBall/bouncingBall.o
-
-# target to build an object file
-fmu10/src/models/bouncingBall/bouncingBall.c.o:
-	$(MAKE) -f CMakeFiles/bouncingBall_10_me.dir/build.make CMakeFiles/bouncingBall_10_me.dir/fmu10/src/models/bouncingBall/bouncingBall.c.o
-	$(MAKE) -f CMakeFiles/bouncingBall_10_cs.dir/build.make CMakeFiles/bouncingBall_10_cs.dir/fmu10/src/models/bouncingBall/bouncingBall.c.o
-.PHONY : fmu10/src/models/bouncingBall/bouncingBall.c.o
-
-fmu10/src/models/bouncingBall/bouncingBall.i: fmu10/src/models/bouncingBall/bouncingBall.c.i
-
-.PHONY : fmu10/src/models/bouncingBall/bouncingBall.i
-
-# target to preprocess a source file
-fmu10/src/models/bouncingBall/bouncingBall.c.i:
-	$(MAKE) -f CMakeFiles/bouncingBall_10_me.dir/build.make CMakeFiles/bouncingBall_10_me.dir/fmu10/src/models/bouncingBall/bouncingBall.c.i
-	$(MAKE) -f CMakeFiles/bouncingBall_10_cs.dir/build.make CMakeFiles/bouncingBall_10_cs.dir/fmu10/src/models/bouncingBall/bouncingBall.c.i
-.PHONY : fmu10/src/models/bouncingBall/bouncingBall.c.i
-
-fmu10/src/models/bouncingBall/bouncingBall.s: fmu10/src/models/bouncingBall/bouncingBall.c.s
-
-.PHONY : fmu10/src/models/bouncingBall/bouncingBall.s
-
-# target to generate assembly for a file
-fmu10/src/models/bouncingBall/bouncingBall.c.s:
-	$(MAKE) -f CMakeFiles/bouncingBall_10_me.dir/build.make CMakeFiles/bouncingBall_10_me.dir/fmu10/src/models/bouncingBall/bouncingBall.c.s
-	$(MAKE) -f CMakeFiles/bouncingBall_10_cs.dir/build.make CMakeFiles/bouncingBall_10_cs.dir/fmu10/src/models/bouncingBall/bouncingBall.c.s
-.PHONY : fmu10/src/models/bouncingBall/bouncingBall.c.s
-
-fmu10/src/models/dq/dq.o: fmu10/src/models/dq/dq.c.o
-
-.PHONY : fmu10/src/models/dq/dq.o
-
-# target to build an object file
-fmu10/src/models/dq/dq.c.o:
-	$(MAKE) -f CMakeFiles/dq_10_cs.dir/build.make CMakeFiles/dq_10_cs.dir/fmu10/src/models/dq/dq.c.o
-	$(MAKE) -f CMakeFiles/dq_10_me.dir/build.make CMakeFiles/dq_10_me.dir/fmu10/src/models/dq/dq.c.o
-.PHONY : fmu10/src/models/dq/dq.c.o
-
-fmu10/src/models/dq/dq.i: fmu10/src/models/dq/dq.c.i
-
-.PHONY : fmu10/src/models/dq/dq.i
-
-# target to preprocess a source file
-fmu10/src/models/dq/dq.c.i:
-	$(MAKE) -f CMakeFiles/dq_10_cs.dir/build.make CMakeFiles/dq_10_cs.dir/fmu10/src/models/dq/dq.c.i
-	$(MAKE) -f CMakeFiles/dq_10_me.dir/build.make CMakeFiles/dq_10_me.dir/fmu10/src/models/dq/dq.c.i
-.PHONY : fmu10/src/models/dq/dq.c.i
-
-fmu10/src/models/dq/dq.s: fmu10/src/models/dq/dq.c.s
-
-.PHONY : fmu10/src/models/dq/dq.s
-
-# target to generate assembly for a file
-fmu10/src/models/dq/dq.c.s:
-	$(MAKE) -f CMakeFiles/dq_10_cs.dir/build.make CMakeFiles/dq_10_cs.dir/fmu10/src/models/dq/dq.c.s
-	$(MAKE) -f CMakeFiles/dq_10_me.dir/build.make CMakeFiles/dq_10_me.dir/fmu10/src/models/dq/dq.c.s
-.PHONY : fmu10/src/models/dq/dq.c.s
-
-fmu10/src/models/inc/inc.o: fmu10/src/models/inc/inc.c.o
-
-.PHONY : fmu10/src/models/inc/inc.o
-
-# target to build an object file
-fmu10/src/models/inc/inc.c.o:
-	$(MAKE) -f CMakeFiles/inc_10_cs.dir/build.make CMakeFiles/inc_10_cs.dir/fmu10/src/models/inc/inc.c.o
-	$(MAKE) -f CMakeFiles/inc_10_me.dir/build.make CMakeFiles/inc_10_me.dir/fmu10/src/models/inc/inc.c.o
-.PHONY : fmu10/src/models/inc/inc.c.o
-
-fmu10/src/models/inc/inc.i: fmu10/src/models/inc/inc.c.i
-
-.PHONY : fmu10/src/models/inc/inc.i
-
-# target to preprocess a source file
-fmu10/src/models/inc/inc.c.i:
-	$(MAKE) -f CMakeFiles/inc_10_cs.dir/build.make CMakeFiles/inc_10_cs.dir/fmu10/src/models/inc/inc.c.i
-	$(MAKE) -f CMakeFiles/inc_10_me.dir/build.make CMakeFiles/inc_10_me.dir/fmu10/src/models/inc/inc.c.i
-.PHONY : fmu10/src/models/inc/inc.c.i
-
-fmu10/src/models/inc/inc.s: fmu10/src/models/inc/inc.c.s
-
-.PHONY : fmu10/src/models/inc/inc.s
-
-# target to generate assembly for a file
-fmu10/src/models/inc/inc.c.s:
-	$(MAKE) -f CMakeFiles/inc_10_cs.dir/build.make CMakeFiles/inc_10_cs.dir/fmu10/src/models/inc/inc.c.s
-	$(MAKE) -f CMakeFiles/inc_10_me.dir/build.make CMakeFiles/inc_10_me.dir/fmu10/src/models/inc/inc.c.s
-.PHONY : fmu10/src/models/inc/inc.c.s
-
-fmu10/src/models/values/values.o: fmu10/src/models/values/values.c.o
-
-.PHONY : fmu10/src/models/values/values.o
-
-# target to build an object file
-fmu10/src/models/values/values.c.o:
-	$(MAKE) -f CMakeFiles/values_10_cs.dir/build.make CMakeFiles/values_10_cs.dir/fmu10/src/models/values/values.c.o
-	$(MAKE) -f CMakeFiles/values_10_me.dir/build.make CMakeFiles/values_10_me.dir/fmu10/src/models/values/values.c.o
-.PHONY : fmu10/src/models/values/values.c.o
-
-fmu10/src/models/values/values.i: fmu10/src/models/values/values.c.i
-
-.PHONY : fmu10/src/models/values/values.i
-
-# target to preprocess a source file
-fmu10/src/models/values/values.c.i:
-	$(MAKE) -f CMakeFiles/values_10_cs.dir/build.make CMakeFiles/values_10_cs.dir/fmu10/src/models/values/values.c.i
-	$(MAKE) -f CMakeFiles/values_10_me.dir/build.make CMakeFiles/values_10_me.dir/fmu10/src/models/values/values.c.i
-.PHONY : fmu10/src/models/values/values.c.i
-
-fmu10/src/models/values/values.s: fmu10/src/models/values/values.c.s
-
-.PHONY : fmu10/src/models/values/values.s
-
-# target to generate assembly for a file
-fmu10/src/models/values/values.c.s:
-	$(MAKE) -f CMakeFiles/values_10_cs.dir/build.make CMakeFiles/values_10_cs.dir/fmu10/src/models/values/values.c.s
-	$(MAKE) -f CMakeFiles/values_10_me.dir/build.make CMakeFiles/values_10_me.dir/fmu10/src/models/values/values.c.s
-.PHONY : fmu10/src/models/values/values.c.s
-
-fmu10/src/models/vanDerPol/vanDerPol.o: fmu10/src/models/vanDerPol/vanDerPol.c.o
-
-.PHONY : fmu10/src/models/vanDerPol/vanDerPol.o
-
-# target to build an object file
-fmu10/src/models/vanDerPol/vanDerPol.c.o:
-	$(MAKE) -f CMakeFiles/vanDerPol_10_cs.dir/build.make CMakeFiles/vanDerPol_10_cs.dir/fmu10/src/models/vanDerPol/vanDerPol.c.o
-	$(MAKE) -f CMakeFiles/vanDerPol_10_me.dir/build.make CMakeFiles/vanDerPol_10_me.dir/fmu10/src/models/vanDerPol/vanDerPol.c.o
-.PHONY : fmu10/src/models/vanDerPol/vanDerPol.c.o
-
-fmu10/src/models/vanDerPol/vanDerPol.i: fmu10/src/models/vanDerPol/vanDerPol.c.i
-
-.PHONY : fmu10/src/models/vanDerPol/vanDerPol.i
-
-# target to preprocess a source file
-fmu10/src/models/vanDerPol/vanDerPol.c.i:
-	$(MAKE) -f CMakeFiles/vanDerPol_10_cs.dir/build.make CMakeFiles/vanDerPol_10_cs.dir/fmu10/src/models/vanDerPol/vanDerPol.c.i
-	$(MAKE) -f CMakeFiles/vanDerPol_10_me.dir/build.make CMakeFiles/vanDerPol_10_me.dir/fmu10/src/models/vanDerPol/vanDerPol.c.i
-.PHONY : fmu10/src/models/vanDerPol/vanDerPol.c.i
-
-fmu10/src/models/vanDerPol/vanDerPol.s: fmu10/src/models/vanDerPol/vanDerPol.c.s
-
-.PHONY : fmu10/src/models/vanDerPol/vanDerPol.s
-
-# target to generate assembly for a file
-fmu10/src/models/vanDerPol/vanDerPol.c.s:
-	$(MAKE) -f CMakeFiles/vanDerPol_10_cs.dir/build.make CMakeFiles/vanDerPol_10_cs.dir/fmu10/src/models/vanDerPol/vanDerPol.c.s
-	$(MAKE) -f CMakeFiles/vanDerPol_10_me.dir/build.make CMakeFiles/vanDerPol_10_me.dir/fmu10/src/models/vanDerPol/vanDerPol.c.s
-.PHONY : fmu10/src/models/vanDerPol/vanDerPol.c.s
 
 fmu10/src/shared/parser/stack.o: fmu10/src/shared/parser/stack.c.o
 
@@ -811,36 +427,6 @@ fmu20/src/model_exchange/main.c.s:
 	$(MAKE) -f CMakeFiles/fmusim_20_me.dir/build.make CMakeFiles/fmusim_20_me.dir/fmu20/src/model_exchange/main.c.s
 .PHONY : fmu20/src/model_exchange/main.c.s
 
-fmu20/src/models/bouncingBall/bouncingBall.o: fmu20/src/models/bouncingBall/bouncingBall.c.o
-
-.PHONY : fmu20/src/models/bouncingBall/bouncingBall.o
-
-# target to build an object file
-fmu20/src/models/bouncingBall/bouncingBall.c.o:
-	$(MAKE) -f CMakeFiles/bouncingBall_20_cs.dir/build.make CMakeFiles/bouncingBall_20_cs.dir/fmu20/src/models/bouncingBall/bouncingBall.c.o
-	$(MAKE) -f CMakeFiles/bouncingBall_20_me.dir/build.make CMakeFiles/bouncingBall_20_me.dir/fmu20/src/models/bouncingBall/bouncingBall.c.o
-.PHONY : fmu20/src/models/bouncingBall/bouncingBall.c.o
-
-fmu20/src/models/bouncingBall/bouncingBall.i: fmu20/src/models/bouncingBall/bouncingBall.c.i
-
-.PHONY : fmu20/src/models/bouncingBall/bouncingBall.i
-
-# target to preprocess a source file
-fmu20/src/models/bouncingBall/bouncingBall.c.i:
-	$(MAKE) -f CMakeFiles/bouncingBall_20_cs.dir/build.make CMakeFiles/bouncingBall_20_cs.dir/fmu20/src/models/bouncingBall/bouncingBall.c.i
-	$(MAKE) -f CMakeFiles/bouncingBall_20_me.dir/build.make CMakeFiles/bouncingBall_20_me.dir/fmu20/src/models/bouncingBall/bouncingBall.c.i
-.PHONY : fmu20/src/models/bouncingBall/bouncingBall.c.i
-
-fmu20/src/models/bouncingBall/bouncingBall.s: fmu20/src/models/bouncingBall/bouncingBall.c.s
-
-.PHONY : fmu20/src/models/bouncingBall/bouncingBall.s
-
-# target to generate assembly for a file
-fmu20/src/models/bouncingBall/bouncingBall.c.s:
-	$(MAKE) -f CMakeFiles/bouncingBall_20_cs.dir/build.make CMakeFiles/bouncingBall_20_cs.dir/fmu20/src/models/bouncingBall/bouncingBall.c.s
-	$(MAKE) -f CMakeFiles/bouncingBall_20_me.dir/build.make CMakeFiles/bouncingBall_20_me.dir/fmu20/src/models/bouncingBall/bouncingBall.c.s
-.PHONY : fmu20/src/models/bouncingBall/bouncingBall.c.s
-
 fmu20/src/models/dq/dq.o: fmu20/src/models/dq/dq.c.o
 
 .PHONY : fmu20/src/models/dq/dq.o
@@ -848,7 +434,6 @@ fmu20/src/models/dq/dq.o: fmu20/src/models/dq/dq.c.o
 # target to build an object file
 fmu20/src/models/dq/dq.c.o:
 	$(MAKE) -f CMakeFiles/dq_20_me.dir/build.make CMakeFiles/dq_20_me.dir/fmu20/src/models/dq/dq.c.o
-	$(MAKE) -f CMakeFiles/dq_20_cs.dir/build.make CMakeFiles/dq_20_cs.dir/fmu20/src/models/dq/dq.c.o
 .PHONY : fmu20/src/models/dq/dq.c.o
 
 fmu20/src/models/dq/dq.i: fmu20/src/models/dq/dq.c.i
@@ -858,7 +443,6 @@ fmu20/src/models/dq/dq.i: fmu20/src/models/dq/dq.c.i
 # target to preprocess a source file
 fmu20/src/models/dq/dq.c.i:
 	$(MAKE) -f CMakeFiles/dq_20_me.dir/build.make CMakeFiles/dq_20_me.dir/fmu20/src/models/dq/dq.c.i
-	$(MAKE) -f CMakeFiles/dq_20_cs.dir/build.make CMakeFiles/dq_20_cs.dir/fmu20/src/models/dq/dq.c.i
 .PHONY : fmu20/src/models/dq/dq.c.i
 
 fmu20/src/models/dq/dq.s: fmu20/src/models/dq/dq.c.s
@@ -868,98 +452,34 @@ fmu20/src/models/dq/dq.s: fmu20/src/models/dq/dq.c.s
 # target to generate assembly for a file
 fmu20/src/models/dq/dq.c.s:
 	$(MAKE) -f CMakeFiles/dq_20_me.dir/build.make CMakeFiles/dq_20_me.dir/fmu20/src/models/dq/dq.c.s
-	$(MAKE) -f CMakeFiles/dq_20_cs.dir/build.make CMakeFiles/dq_20_cs.dir/fmu20/src/models/dq/dq.c.s
 .PHONY : fmu20/src/models/dq/dq.c.s
 
-fmu20/src/models/inc/inc.o: fmu20/src/models/inc/inc.c.o
+fmu20/src/models/springDamper/springDamper.o: fmu20/src/models/springDamper/springDamper.c.o
 
-.PHONY : fmu20/src/models/inc/inc.o
-
-# target to build an object file
-fmu20/src/models/inc/inc.c.o:
-	$(MAKE) -f CMakeFiles/inc_20_me.dir/build.make CMakeFiles/inc_20_me.dir/fmu20/src/models/inc/inc.c.o
-	$(MAKE) -f CMakeFiles/inc_20_cs.dir/build.make CMakeFiles/inc_20_cs.dir/fmu20/src/models/inc/inc.c.o
-.PHONY : fmu20/src/models/inc/inc.c.o
-
-fmu20/src/models/inc/inc.i: fmu20/src/models/inc/inc.c.i
-
-.PHONY : fmu20/src/models/inc/inc.i
-
-# target to preprocess a source file
-fmu20/src/models/inc/inc.c.i:
-	$(MAKE) -f CMakeFiles/inc_20_me.dir/build.make CMakeFiles/inc_20_me.dir/fmu20/src/models/inc/inc.c.i
-	$(MAKE) -f CMakeFiles/inc_20_cs.dir/build.make CMakeFiles/inc_20_cs.dir/fmu20/src/models/inc/inc.c.i
-.PHONY : fmu20/src/models/inc/inc.c.i
-
-fmu20/src/models/inc/inc.s: fmu20/src/models/inc/inc.c.s
-
-.PHONY : fmu20/src/models/inc/inc.s
-
-# target to generate assembly for a file
-fmu20/src/models/inc/inc.c.s:
-	$(MAKE) -f CMakeFiles/inc_20_me.dir/build.make CMakeFiles/inc_20_me.dir/fmu20/src/models/inc/inc.c.s
-	$(MAKE) -f CMakeFiles/inc_20_cs.dir/build.make CMakeFiles/inc_20_cs.dir/fmu20/src/models/inc/inc.c.s
-.PHONY : fmu20/src/models/inc/inc.c.s
-
-fmu20/src/models/values/values.o: fmu20/src/models/values/values.c.o
-
-.PHONY : fmu20/src/models/values/values.o
+.PHONY : fmu20/src/models/springDamper/springDamper.o
 
 # target to build an object file
-fmu20/src/models/values/values.c.o:
-	$(MAKE) -f CMakeFiles/values_20_me.dir/build.make CMakeFiles/values_20_me.dir/fmu20/src/models/values/values.c.o
-	$(MAKE) -f CMakeFiles/values_20_cs.dir/build.make CMakeFiles/values_20_cs.dir/fmu20/src/models/values/values.c.o
-.PHONY : fmu20/src/models/values/values.c.o
+fmu20/src/models/springDamper/springDamper.c.o:
+	$(MAKE) -f CMakeFiles/springDamper_20_me.dir/build.make CMakeFiles/springDamper_20_me.dir/fmu20/src/models/springDamper/springDamper.c.o
+.PHONY : fmu20/src/models/springDamper/springDamper.c.o
 
-fmu20/src/models/values/values.i: fmu20/src/models/values/values.c.i
+fmu20/src/models/springDamper/springDamper.i: fmu20/src/models/springDamper/springDamper.c.i
 
-.PHONY : fmu20/src/models/values/values.i
-
-# target to preprocess a source file
-fmu20/src/models/values/values.c.i:
-	$(MAKE) -f CMakeFiles/values_20_me.dir/build.make CMakeFiles/values_20_me.dir/fmu20/src/models/values/values.c.i
-	$(MAKE) -f CMakeFiles/values_20_cs.dir/build.make CMakeFiles/values_20_cs.dir/fmu20/src/models/values/values.c.i
-.PHONY : fmu20/src/models/values/values.c.i
-
-fmu20/src/models/values/values.s: fmu20/src/models/values/values.c.s
-
-.PHONY : fmu20/src/models/values/values.s
-
-# target to generate assembly for a file
-fmu20/src/models/values/values.c.s:
-	$(MAKE) -f CMakeFiles/values_20_me.dir/build.make CMakeFiles/values_20_me.dir/fmu20/src/models/values/values.c.s
-	$(MAKE) -f CMakeFiles/values_20_cs.dir/build.make CMakeFiles/values_20_cs.dir/fmu20/src/models/values/values.c.s
-.PHONY : fmu20/src/models/values/values.c.s
-
-fmu20/src/models/vanDerPol/vanDerPol.o: fmu20/src/models/vanDerPol/vanDerPol.c.o
-
-.PHONY : fmu20/src/models/vanDerPol/vanDerPol.o
-
-# target to build an object file
-fmu20/src/models/vanDerPol/vanDerPol.c.o:
-	$(MAKE) -f CMakeFiles/vanDerPol_20_me.dir/build.make CMakeFiles/vanDerPol_20_me.dir/fmu20/src/models/vanDerPol/vanDerPol.c.o
-	$(MAKE) -f CMakeFiles/vanDerPol_20_cs.dir/build.make CMakeFiles/vanDerPol_20_cs.dir/fmu20/src/models/vanDerPol/vanDerPol.c.o
-.PHONY : fmu20/src/models/vanDerPol/vanDerPol.c.o
-
-fmu20/src/models/vanDerPol/vanDerPol.i: fmu20/src/models/vanDerPol/vanDerPol.c.i
-
-.PHONY : fmu20/src/models/vanDerPol/vanDerPol.i
+.PHONY : fmu20/src/models/springDamper/springDamper.i
 
 # target to preprocess a source file
-fmu20/src/models/vanDerPol/vanDerPol.c.i:
-	$(MAKE) -f CMakeFiles/vanDerPol_20_me.dir/build.make CMakeFiles/vanDerPol_20_me.dir/fmu20/src/models/vanDerPol/vanDerPol.c.i
-	$(MAKE) -f CMakeFiles/vanDerPol_20_cs.dir/build.make CMakeFiles/vanDerPol_20_cs.dir/fmu20/src/models/vanDerPol/vanDerPol.c.i
-.PHONY : fmu20/src/models/vanDerPol/vanDerPol.c.i
+fmu20/src/models/springDamper/springDamper.c.i:
+	$(MAKE) -f CMakeFiles/springDamper_20_me.dir/build.make CMakeFiles/springDamper_20_me.dir/fmu20/src/models/springDamper/springDamper.c.i
+.PHONY : fmu20/src/models/springDamper/springDamper.c.i
 
-fmu20/src/models/vanDerPol/vanDerPol.s: fmu20/src/models/vanDerPol/vanDerPol.c.s
+fmu20/src/models/springDamper/springDamper.s: fmu20/src/models/springDamper/springDamper.c.s
 
-.PHONY : fmu20/src/models/vanDerPol/vanDerPol.s
+.PHONY : fmu20/src/models/springDamper/springDamper.s
 
 # target to generate assembly for a file
-fmu20/src/models/vanDerPol/vanDerPol.c.s:
-	$(MAKE) -f CMakeFiles/vanDerPol_20_me.dir/build.make CMakeFiles/vanDerPol_20_me.dir/fmu20/src/models/vanDerPol/vanDerPol.c.s
-	$(MAKE) -f CMakeFiles/vanDerPol_20_cs.dir/build.make CMakeFiles/vanDerPol_20_cs.dir/fmu20/src/models/vanDerPol/vanDerPol.c.s
-.PHONY : fmu20/src/models/vanDerPol/vanDerPol.c.s
+fmu20/src/models/springDamper/springDamper.c.s:
+	$(MAKE) -f CMakeFiles/springDamper_20_me.dir/build.make CMakeFiles/springDamper_20_me.dir/fmu20/src/models/springDamper/springDamper.c.s
+.PHONY : fmu20/src/models/springDamper/springDamper.c.s
 
 fmu20/src/shared/parser/XmlElement.o: fmu20/src/shared/parser/XmlElement.cpp.o
 
@@ -1117,54 +637,21 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... fmusim_20_me"
 	@echo "... rebuild_cache"
-	@echo "... fmusim_10_me"
-	@echo "... vanDerPol_20_me"
 	@echo "... edit_cache"
-	@echo "... values_20_me"
 	@echo "... test"
-	@echo "... inc_20_me"
-	@echo "... bouncingBall_10_me"
-	@echo "... fmusim_10_cs"
 	@echo "... dq_20_me"
-	@echo "... bouncingBall_20_cs"
-	@echo "... dq_20_cs"
-	@echo "... inc_10_cs"
-	@echo "... vanDerPol_20_cs"
-	@echo "... bouncingBall_20_me"
-	@echo "... values_10_cs"
-	@echo "... bouncingBall_10_cs"
-	@echo "... dq_10_cs"
-	@echo "... values_20_cs"
-	@echo "... vanDerPol_10_cs"
-	@echo "... dq_10_me"
-	@echo "... inc_10_me"
+	@echo "... fmusim_10_me"
+	@echo "... fmusim_20_me"
+	@echo "... springDamper_20_me"
+	@echo "... fmusim_10_cs"
 	@echo "... fmusim_20_cs"
-	@echo "... values_10_me"
-	@echo "... vanDerPol_10_me"
-	@echo "... inc_20_cs"
 	@echo "... fmu10/src/co_simulation/main.o"
 	@echo "... fmu10/src/co_simulation/main.i"
 	@echo "... fmu10/src/co_simulation/main.s"
 	@echo "... fmu10/src/model_exchange/main.o"
 	@echo "... fmu10/src/model_exchange/main.i"
 	@echo "... fmu10/src/model_exchange/main.s"
-	@echo "... fmu10/src/models/bouncingBall/bouncingBall.o"
-	@echo "... fmu10/src/models/bouncingBall/bouncingBall.i"
-	@echo "... fmu10/src/models/bouncingBall/bouncingBall.s"
-	@echo "... fmu10/src/models/dq/dq.o"
-	@echo "... fmu10/src/models/dq/dq.i"
-	@echo "... fmu10/src/models/dq/dq.s"
-	@echo "... fmu10/src/models/inc/inc.o"
-	@echo "... fmu10/src/models/inc/inc.i"
-	@echo "... fmu10/src/models/inc/inc.s"
-	@echo "... fmu10/src/models/values/values.o"
-	@echo "... fmu10/src/models/values/values.i"
-	@echo "... fmu10/src/models/values/values.s"
-	@echo "... fmu10/src/models/vanDerPol/vanDerPol.o"
-	@echo "... fmu10/src/models/vanDerPol/vanDerPol.i"
-	@echo "... fmu10/src/models/vanDerPol/vanDerPol.s"
 	@echo "... fmu10/src/shared/parser/stack.o"
 	@echo "... fmu10/src/shared/parser/stack.i"
 	@echo "... fmu10/src/shared/parser/stack.s"
@@ -1183,21 +670,12 @@ help:
 	@echo "... fmu20/src/model_exchange/main.o"
 	@echo "... fmu20/src/model_exchange/main.i"
 	@echo "... fmu20/src/model_exchange/main.s"
-	@echo "... fmu20/src/models/bouncingBall/bouncingBall.o"
-	@echo "... fmu20/src/models/bouncingBall/bouncingBall.i"
-	@echo "... fmu20/src/models/bouncingBall/bouncingBall.s"
 	@echo "... fmu20/src/models/dq/dq.o"
 	@echo "... fmu20/src/models/dq/dq.i"
 	@echo "... fmu20/src/models/dq/dq.s"
-	@echo "... fmu20/src/models/inc/inc.o"
-	@echo "... fmu20/src/models/inc/inc.i"
-	@echo "... fmu20/src/models/inc/inc.s"
-	@echo "... fmu20/src/models/values/values.o"
-	@echo "... fmu20/src/models/values/values.i"
-	@echo "... fmu20/src/models/values/values.s"
-	@echo "... fmu20/src/models/vanDerPol/vanDerPol.o"
-	@echo "... fmu20/src/models/vanDerPol/vanDerPol.i"
-	@echo "... fmu20/src/models/vanDerPol/vanDerPol.s"
+	@echo "... fmu20/src/models/springDamper/springDamper.o"
+	@echo "... fmu20/src/models/springDamper/springDamper.i"
+	@echo "... fmu20/src/models/springDamper/springDamper.s"
 	@echo "... fmu20/src/shared/parser/XmlElement.o"
 	@echo "... fmu20/src/shared/parser/XmlElement.i"
 	@echo "... fmu20/src/shared/parser/XmlElement.s"
