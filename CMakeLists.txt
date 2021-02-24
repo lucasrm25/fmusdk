@@ -75,9 +75,12 @@ foreach(MODEL ${MODELS})
   target_include_directories(${TARGET_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/shared/include")
 
   # LIBS = -lm -lgsl -lgslcblas
+  # GSL_INCLUDE = -I/data/oums-quantopo/YOURUSERNAME/gsl/include
+  # GSL_LINK = -L/data/oums-quantopo/YOURUSERNAME/gsl/lib
   target_link_libraries (${TARGET_NAME} PRIVATE "m")
   target_link_libraries (${TARGET_NAME} PRIVATE "gsl")
   target_link_libraries (${TARGET_NAME} PRIVATE "gslcblas")
+
 
   # set building directory to a temp folder
   set(FMU_BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/temp/fmu${FMI_VERSION}/${FMI_TYPE}/${MODEL_NAME})
@@ -102,7 +105,6 @@ foreach(MODEL ${MODELS})
   # - Copy source files (.c, .h, .xml) to the temp built directory
   # - Zip source files with compiled model library (.so) to a .fmu file
   # - Copy .fmu file to dist directory
-
   add_custom_command(
     TARGET ${TARGET_NAME} 
     POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy

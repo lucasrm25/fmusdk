@@ -20,9 +20,9 @@
 
 // include fmu header files, typedefs and macros
 #include "fmuTemplate.h"
-#include <gsl/gsl_matrix.h>
-#include <gsl/gsl_linalg.h>
-#include <gsl/gsl_blas.h>
+#include "gsl/gsl_matrix.h"
+#include "gsl/gsl_linalg.h"
+#include "gsl/gsl_blas.h"
 
 // define all model variables and their value references
 // conventions used here:
