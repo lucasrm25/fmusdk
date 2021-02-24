@@ -84,7 +84,7 @@ foreach(MODEL ${MODELS})
   # target_link_libraries (${TARGET_NAME} PRIVATE "gsl")
   # target_link_libraries (${TARGET_NAME} PRIVATE "gslcblas")
 
-  # set(CMAKE_INSTALL_RPATH $ORIGIN)
+  set(CMAKE_INSTALL_RPATH $ORIGIN)
 
   # set building directory to a temp folder
   set(FMU_BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/temp/fmu${FMI_VERSION}/${FMI_TYPE}/${MODEL_NAME})
