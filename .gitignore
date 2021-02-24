@@ -39,3 +39,6 @@ temp/
 
 # Temporary folders for extracting FMUs
 *fmuTmp*/
+
+/extern/gsl-2.6/
+/extern/gsl-install/
