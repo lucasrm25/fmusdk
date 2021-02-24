@@ -104,15 +104,15 @@ foreach(MODEL ${MODELS})
       ARCHIVE_OUTPUT_DIRECTORY         "${FMU_BUILD_DIR}/binaries/${FMI_PLATFORM}"
       ARCHIVE_OUTPUT_DIRECTORY_DEBUG   "${FMU_BUILD_DIR}/binaries/${FMI_PLATFORM}"
       ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${FMU_BUILD_DIR}/binaries/${FMI_PLATFORM}"
+  )
+
+  # set RPATH options
+  set_target_properties(${TARGET_NAME} PROPERTIES
       BUILD_RPATH_USE_ORIGIN            TRUE
       BUILD_RPATH                      "$ORIGIN"
       SKIP_BUILD_RPATH                  FALSE           # TRUE skips RPATH from the build target
+      BUILD_WITH_INSTALL_RPATH          FALSE
   )
-  # set(CMAKE_BUILD_RPATH_USE_ORIGIN, TRUE)
-  # set(CMAKE_SKIP_BUILD_RPATH FALSE)           # TRUE skips RPATH from the build target
-  # set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
-  # set(CMAKE_BUILD_RPATH_USE_LINK_PATH FALSE)
-  # set(CMAKE_BUILD_RPATH $ORIGIN)
 
   # define some macros to be used during compilation
   set_target_properties(${TARGET_NAME} PROPERTIES PREFIX "")
@@ -167,7 +167,8 @@ foreach(MODEL ${MODELS})
   endforeach()
 
   # zip as .fmu
-  add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+  add_custom_command(
+    TARGET ${TARGET_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E tar "cfv" "${CMAKE_CURRENT_SOURCE_DIR}/dist/fmu${FMI_VERSION}/${FMI_TYPE}/${MODEL_NAME}.fmu" --format=zip
     "modelDescription.xml"
     "binaries"
