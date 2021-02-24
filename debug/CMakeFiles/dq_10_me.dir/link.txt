@@ -1,1 +1,0 @@
-/usr/bin/cc -fPIC -ggdb3 -O0 -g  -shared -Wl,-soname,dq.so -o ../temp/fmu10/me/dq/binaries/linux64/dq.so CMakeFiles/dq_10_me.dir/fmu10/src/models/dq/dq.c.o 

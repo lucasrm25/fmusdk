@@ -1,1 +1,1 @@
-/usr/bin/cc -fPIC   -shared -Wl,-soname,dq.so -o ../temp/fmu20/me/dq/binaries/linux64/dq.so CMakeFiles/dq_20_me.dir/fmu20/src/models/dq/dq.c.o -lm -lgsl -lgslcblas 
+/usr/bin/cc -fPIC   -shared -Wl,-soname,dq.so -o ../temp/fmu20/me/dq/binaries/linux64/dq.so CMakeFiles/dq_20_me.dir/fmu20/src/models/dq/dq.c.o -Wl,-rpath,/home/lucas/Desktop/11_Github/FMI/fmusdk/extern/gsl/lib -lm ../extern/gsl/lib/libgsl.so ../extern/gsl/lib/libgslcblas.so 

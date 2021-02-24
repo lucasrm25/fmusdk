@@ -73,14 +73,18 @@ foreach(MODEL ${MODELS})
   # include libraries (FMU standard .h files and our FMU template)
   target_include_directories(${TARGET_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/models")
   target_include_directories(${TARGET_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/shared/include")
+  target_include_directories(${TARGET_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/extern/gsl/include")
 
-  # LIBS = -lm -lgsl -lgslcblas
-  # GSL_INCLUDE = -I/data/oums-quantopo/YOURUSERNAME/gsl/include
   # GSL_LINK = -L/data/oums-quantopo/YOURUSERNAME/gsl/lib
+  # LIBS = -lm -lgsl -lgslcblas
   target_link_libraries (${TARGET_NAME} PRIVATE "m")
-  target_link_libraries (${TARGET_NAME} PRIVATE "gsl")
-  target_link_libraries (${TARGET_NAME} PRIVATE "gslcblas")
+  target_link_libraries (${TARGET_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/extern/gsl/lib/libgsl.so")
+  target_link_libraries (${TARGET_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/extern/gsl/lib/libgslcblas.so")
 
+  # target_link_libraries (${TARGET_NAME} PRIVATE "gsl")
+  # target_link_libraries (${TARGET_NAME} PRIVATE "gslcblas")
+
+  # set(CMAKE_INSTALL_RPATH $ORIGIN)
 
   # set building directory to a temp folder
   set(FMU_BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/temp/fmu${FMI_VERSION}/${FMI_TYPE}/${MODEL_NAME})
@@ -129,6 +133,26 @@ foreach(MODEL ${MODELS})
     "${CMAKE_CURRENT_SOURCE_DIR}/fmu${FMI_VERSION}/src/models/fmuTemplate.h"
     "${FMU_BUILD_DIR}/sources/fmuTemplate.h"
   )
+
+  # copy GSL headers into fmu "sources" folder 
+  add_custom_command(
+    TARGET ${TARGET_NAME} 
+    POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${CMAKE_CURRENT_SOURCE_DIR}/extern/gsl/include/gsl" "${FMU_BUILD_DIR}/sources/gsl"
+  )
+
+  # copy GSL library into fmu "binaries" folder 
+  file(GLOB MY_LIB "${CMAKE_CURRENT_SOURCE_DIR}/extern/gsl/lib/*")
+  foreach(CurrentLibFile IN LISTS MY_LIB)
+    add_custom_command(
+      TARGET ${TARGET_NAME} 
+      POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
+      ${CurrentLibFile} "${FMU_BUILD_DIR}/binaries/${FMI_PLATFORM}"
+      # COMMENT "Copying library: ${CurrentLibFile}"
+    )
+  endforeach()
+
+  # zip as .fmu
   add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E tar "cfv" "${CMAKE_CURRENT_SOURCE_DIR}/dist/fmu${FMI_VERSION}/${FMI_TYPE}/${MODEL_NAME}.fmu" --format=zip
     "modelDescription.xml"
@@ -136,6 +160,7 @@ foreach(MODEL ${MODELS})
     "sources"
     WORKING_DIRECTORY ${FMU_BUILD_DIR}
   )
+
   MESSAGE(" * FMU model path: ${CMAKE_CURRENT_SOURCE_DIR}/dist/fmu${FMI_VERSION}/${FMI_TYPE}/${MODEL_NAME}.fmu")
 
 endforeach(MODEL)

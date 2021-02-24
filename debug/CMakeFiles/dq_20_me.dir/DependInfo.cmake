@@ -18,6 +18,7 @@ set(CMAKE_TARGET_DEFINITIONS_C
 set(CMAKE_C_TARGET_INCLUDE_PATH
   "../fmu20/src/models"
   "../fmu20/src/shared/include"
+  "../extern/gsl/include"
   )
 
 # Targets to which this target links.

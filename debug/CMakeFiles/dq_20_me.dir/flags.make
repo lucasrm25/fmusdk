@@ -6,5 +6,5 @@ C_FLAGS = -fPIC
 
 C_DEFINES = -DDISABLE_PREFIX -Ddq_20_me_EXPORTS
 
-C_INCLUDES = -I/home/lucas/Desktop/11_Github/FMI/fmusdk/fmu20/src/models -I/home/lucas/Desktop/11_Github/FMI/fmusdk/fmu20/src/shared/include 
+C_INCLUDES = -I/home/lucas/Desktop/11_Github/FMI/fmusdk/fmu20/src/models -I/home/lucas/Desktop/11_Github/FMI/fmusdk/fmu20/src/shared/include -I/home/lucas/Desktop/11_Github/FMI/fmusdk/extern/gsl/include 
 

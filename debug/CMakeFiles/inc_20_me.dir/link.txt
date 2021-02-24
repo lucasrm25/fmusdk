@@ -1,1 +1,0 @@
-/usr/bin/cc -fPIC -ggdb3 -O0 -g  -shared -Wl,-soname,inc.so -o ../temp/fmu20/me/inc/binaries/linux64/inc.so CMakeFiles/inc_20_me.dir/fmu20/src/models/inc/inc.c.o 

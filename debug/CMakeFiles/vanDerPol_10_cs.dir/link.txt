@@ -1,1 +1,0 @@
-/usr/bin/cc -fPIC -ggdb3 -O0 -g  -shared -Wl,-soname,vanDerPol.so -o ../temp/fmu10/cs/vanDerPol/binaries/linux64/vanDerPol.so CMakeFiles/vanDerPol_10_cs.dir/fmu10/src/models/vanDerPol/vanDerPol.c.o 

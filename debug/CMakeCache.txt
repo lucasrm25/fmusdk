@@ -70,9 +70,6 @@ CMAKE_C_FLAGS:STRING=
 //Flags used by the C compiler during DEBUG builds.
 CMAKE_C_FLAGS_DEBUG:STRING=-g
 
-//Flags used by the C compiler during FORCE builds.
-CMAKE_C_FLAGS_FORCE:STRING=
-
 //Flags used by the C compiler during MINSIZEREL builds.
 CMAKE_C_FLAGS_MINSIZEREL:STRING=-Os -DNDEBUG
 
@@ -228,10 +225,10 @@ FMUSDK_BINARY_DIR:STATIC=/home/lucas/Desktop/11_Github/FMI/fmusdk/debug
 FMUSDK_SOURCE_DIR:STATIC=/home/lucas/Desktop/11_Github/FMI/fmusdk
 
 //Dependencies for the target
-dq_20_me_LIB_DEPENDS:STATIC=general;m;general;gsl;general;gslcblas;
+dq_20_me_LIB_DEPENDS:STATIC=general;m;general;/home/lucas/Desktop/11_Github/FMI/fmusdk/extern/gsl/lib/libgsl.so;general;/home/lucas/Desktop/11_Github/FMI/fmusdk/extern/gsl/lib/libgslcblas.so;
 
 //Dependencies for the target
-springDamper_20_me_LIB_DEPENDS:STATIC=general;m;general;gsl;general;gslcblas;
+springDamper_20_me_LIB_DEPENDS:STATIC=general;m;general;/home/lucas/Desktop/11_Github/FMI/fmusdk/extern/gsl/lib/libgsl.so;general;/home/lucas/Desktop/11_Github/FMI/fmusdk/extern/gsl/lib/libgslcblas.so;
 
 
 ########################
@@ -284,8 +281,6 @@ CMAKE_C_COMPILER_RANLIB-ADVANCED:INTERNAL=1
 CMAKE_C_FLAGS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_C_FLAGS_DEBUG
 CMAKE_C_FLAGS_DEBUG-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_C_FLAGS_FORCE
-CMAKE_C_FLAGS_FORCE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_C_FLAGS_MINSIZEREL
 CMAKE_C_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_C_FLAGS_RELEASE
