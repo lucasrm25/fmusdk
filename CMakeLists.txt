@@ -7,12 +7,24 @@ ENDFUNCTION()
 
 
 # set debug options
-set(default_build_type "debug")
-set(CMAKE_BUILD_TYPE "debug" FORCE)
+set(default_build_type "Debug")
+# set(CMAKE_BUILD_TYPE "Debug")
 
 # set optimization and debug flags
-set (CMAKE_C_FLAGS_DEBUG "-ggdb3 -O0 ${CMAKE_C_FLAGS_DEBUG}")
+set (CMAKE_C_FLAGS_DEBUG "-O0 -ggdb3 -DDEBUG")
+set (CMAKE_CXX_FLAGS_DEBUG "-O0 -ggdb3 -DDEBUG")
+
 set (CMAKE_C_FLAGS_RELEASE "-O2 ${CMAKE_C_FLAGS_RELEASE}")
+# set (CMAKE_C_FLAGS_RELEASE "-ggdb3 -O0 -DDEBUG")
+# set (CMAKE_CXX_FLAGS_RELEASE "-ggdb3 -O0 -DDEBUG")
+
+# SET(CMAKE_CXX_FLAGS "-ggdb3 -O0 -DDEBUG")
+# SET(CMAKE_C_FLAGS "-ggdb3 -O0 -DDEBUG")
+
+
+
+
+message(STATUS "CMAKE_C_FLAGS_DEBUG = ${CMAKE_C_FLAGS_DEBUG}")
 
 # check OS and processor type
 if (NOT UNIX AND NOT "${CMAKE_SIZEOF_VOID_P}" STREQUAL "8")
@@ -23,7 +35,7 @@ set (FMI_PLATFORM linux64)
 
 
 
-project (FMUSDK C CXX)
+project (FMUSDK)
 
 
 # -------------------------------------------------------------------------------------
@@ -33,8 +45,8 @@ project (FMUSDK C CXX)
 MESSAGE("\n * ********* Setting up compilation for FMU models ************")
 
 list(APPEND MODEL1 20 me springDamper)
-# list(APPEND MODEL2 20 me dq)
-list(APPEND MODELS MODEL1) # MODEL2)
+list(APPEND MODEL2 20 me dq)
+list(APPEND MODELS MODEL1 MODEL2)
 
 
 foreach(MODEL ${MODELS})

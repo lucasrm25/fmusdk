@@ -4,7 +4,6 @@
  * Copyright QTronic GmbH. All rights reserved.
  * ---------------------------------------------------------------------------*/
 
-// https://gist.github.com/TysonRayJones/af7bedcdb8dc59868c7966232b4da903
 
 // define class name and unique id
 #define MODEL_IDENTIFIER springDamper
@@ -48,7 +47,7 @@ gsl_vector * Ri_F_Mi;
 // Set values for all variables that define a start value
 // Settings used unless changed by fmi2SetX before fmi2EnterInitializationMode
 void setStartValues(ModelInstance *comp) {
-    r(k_)       = 100;
+    r(k_)          = 100;
     r(Ri_rx_MiMj_) = 0;
     r(Ri_ry_MiMj_) = 0;
     r(Ri_rz_MiMj_) = 0;
@@ -67,10 +66,11 @@ void calculateValues(ModelInstance *comp) {
     r(Ri_Fy_Mi_) = r(k_) * r(Ri_ry_MiMj_);
     r(Ri_Fz_Mi_) = r(k_) * r(Ri_rz_MiMj_);
 
+    gsl_vector_set (Ri_F_Mi, 0, r(Ri_Fx_Mi_));
     gsl_vector_set (Ri_F_Mi, 1, r(Ri_Fx_Mi_));
-    gsl_vector_set (Ri_F_Mi, 1, r(Ri_Fx_Mi_));
-    gsl_vector_set (Ri_F_Mi, 1, r(Ri_Fx_Mi_));
+    gsl_vector_set (Ri_F_Mi, 2, r(Ri_Fx_Mi_));
 
+    // absolute force is always negative
     r(Ri_F_Mi_abs_) = (fmi2Real) gsl_blas_dnrm2(Ri_F_Mi);
 
     //   gsl_vector_free (v);

@@ -9,9 +9,14 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/dist/fmu20/me/fmusim_20_me", 
-            //"program": "${workspaceFolder}/fmu20/bin/fmusim_me",
-            "args": ["${workspaceFolder}/dist/fmu20/me/dq.fmu", 4, 0.01, 0, "c"], 
+            "args": ["${workspaceFolder}/dist/fmu20/me/springDamper.fmu", 4, 0.01, 0, "c"],
+            //
+            // "program": "${workspaceFolder}/temp/fmu20/me/fmusim_20_me", 
+            // "args": ["${workspaceFolder}/dist/fmu20/me/dq.fmu", "4", "0.01", "0", "c"],
+            //
+            // "program": "${workspaceFolder}/fmu20/bin/fmusim_me",
             // "args": ["${workspaceFolder}/fmu20/fmu/me/dq.fmu", 4, 0.01, 0, "c"],
+            //
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
