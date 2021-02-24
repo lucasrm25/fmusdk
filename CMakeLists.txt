@@ -33,8 +33,8 @@ project (FMUSDK C CXX)
 MESSAGE("\n * ********* Setting up compilation for FMU models ************")
 
 list(APPEND MODEL1 20 me springDamper)
-list(APPEND MODEL2 20 me dq)
-list(APPEND MODELS MODEL1 MODEL2)
+# list(APPEND MODEL2 20 me dq)
+list(APPEND MODELS MODEL1) # MODEL2)
 
 
 foreach(MODEL ${MODELS})
@@ -44,6 +44,13 @@ foreach(MODEL ${MODELS})
 
   MESSAGE(" * ")
   MESSAGE(" * Configuring FMU model: ${MODEL_NAME}, type: ${FMI_TYPE}, version: ${FMI_VERSION}")
+
+
+  # set(CMAKE_SKIP_BUILD_RPATH TRUE)
+  # set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
+  # set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE)
+  # set(CMAKE_INSTALL_RPATH "bla/lib")   # "$ORIGIN/../lib"
+  
 
   # define target name
   set(TARGET_NAME ${MODEL_NAME}_${FMI_VERSION}_${FMI_TYPE})
@@ -84,8 +91,6 @@ foreach(MODEL ${MODELS})
   # target_link_libraries (${TARGET_NAME} PRIVATE "gsl")
   # target_link_libraries (${TARGET_NAME} PRIVATE "gslcblas")
 
-  set(CMAKE_INSTALL_RPATH $ORIGIN)
-
   # set building directory to a temp folder
   set(FMU_BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/temp/fmu${FMI_VERSION}/${FMI_TYPE}/${MODEL_NAME})
 
@@ -99,8 +104,17 @@ foreach(MODEL ${MODELS})
       ARCHIVE_OUTPUT_DIRECTORY         "${FMU_BUILD_DIR}/binaries/${FMI_PLATFORM}"
       ARCHIVE_OUTPUT_DIRECTORY_DEBUG   "${FMU_BUILD_DIR}/binaries/${FMI_PLATFORM}"
       ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${FMU_BUILD_DIR}/binaries/${FMI_PLATFORM}"
+      BUILD_RPATH_USE_ORIGIN            TRUE
+      BUILD_RPATH                      "$ORIGIN"
+      SKIP_BUILD_RPATH                  FALSE           # TRUE skips RPATH from the build target
   )
+  # set(CMAKE_BUILD_RPATH_USE_ORIGIN, TRUE)
+  # set(CMAKE_SKIP_BUILD_RPATH FALSE)           # TRUE skips RPATH from the build target
+  # set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
+  # set(CMAKE_BUILD_RPATH_USE_LINK_PATH FALSE)
+  # set(CMAKE_BUILD_RPATH $ORIGIN)
 
+  # define some macros to be used during compilation
   set_target_properties(${TARGET_NAME} PROPERTIES PREFIX "")
   set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${MODEL_NAME})
 
