@@ -4,7 +4,7 @@
     modelName="springDamper" 
     guid="{8c4e810f-3df3-4a00-8276-176fa3c9f004}" 
     numberOfEventIndicators="0"
-    description="Force element of type PtP Spring-Damper with friction">
+    description="Force element of type Spring-Damper with LuGre friction model">
 
     <ModelExchange 
         modelIdentifier="springDamper">
@@ -22,76 +22,150 @@
 
     <ModelVariables>
 
-        <!-- index 1 -->  
-        <ScalarVariable name="k"              
-            valueReference="0" description="spring stiffness" 
-            causality="parameter" variability="fixed" initial="exact">
-            <Real start="100" />
+        <!-- ############################## OUTPUTS ########################### -->
+
+        <!-- index 1 --> 
+        <ScalarVariable name="Ri_Fx_Mi" 
+            valueReference="0" description="Ri_Fx_Mi" 
+            causality="output" variability="continuous" initial="calculated">
+            <Real/>
         </ScalarVariable>
 
-        <!-- index 2 -->  
-        <ScalarVariable name="Ri_rx_MiMj" 
-            valueReference="1" description="x distance from P to S in Rp coordinates" 
-            causality="input" variability="continuous">
-            <Real start="0." />
+        <!-- index 2 --> 
+        <ScalarVariable name="Ri_Fy_Mi" 
+            valueReference="1" description="Ri_Fy_Mi" 
+            causality="output" variability="continuous" initial="calculated">
+            <Real/>
         </ScalarVariable>
 
-        <!-- index 3 -->  
-        <ScalarVariable name="Ri_ry_MiMj" 
-            valueReference="2" description="y distance from P to S in Rp coordinates" 
-            causality="input" variability="continuous">
-            <Real start="0." />
+        <!-- index 3 --> 
+        <ScalarVariable name="Ri_Fz_Mi" 
+            valueReference="2" description="Ri_Fz_Mi" 
+            causality="output" variability="continuous" initial="calculated">
+            <Real/>
         </ScalarVariable>
+
+        <!-- ############################## INPUTS ########################### -->
 
         <!-- index 4 -->  
-        <ScalarVariable name="Ri_rz_MiMj" 
-            valueReference="3" description="z distance from P to S in Rp coordinates" 
+        <ScalarVariable name="Ri_rx_MiMj" 
+            valueReference="3" description="x distance from Mi to Mj in Ri coordinates" 
             causality="input" variability="continuous">
             <Real start="0." />
         </ScalarVariable>
 
-        <!-- index 5 --> 
-        <ScalarVariable name="Ri_Fx_Mi" 
-            valueReference="4" description="Ri_Fx_Mi" 
-            causality="output" variability="continuous" initial="calculated">
-            <Real/>
+        <!-- index 5 -->  
+        <ScalarVariable name="Ri_ry_MiMj" 
+            valueReference="4" description="y distance from Mi to Mj in Ri coordinates" 
+            causality="input" variability="continuous">
+            <Real start="0." />
         </ScalarVariable>
 
-        <!-- index 6 --> 
-        <ScalarVariable name="Ri_Fy_Mi" 
-            valueReference="5" description="Ri_Fy_Mi" 
-            causality="output" variability="continuous" initial="calculated">
-            <Real/>
+        <!-- index 6 -->  
+        <ScalarVariable name="Ri_rz_MiMj" 
+            valueReference="5" description="z distance from Mi to Mj in Ri coordinates" 
+            causality="input" variability="continuous">
+            <Real start="0." />
         </ScalarVariable>
 
-        <!-- index 7 --> 
-        <ScalarVariable name="Ri_Fz_Mi" 
-            valueReference="6" description="Ri_Fz_Mi" 
-            causality="output" variability="continuous" initial="calculated">
-            <Real/>
+        <!-- index 7 -->  
+        <ScalarVariable name="Ri_vx_MiMj" 
+            valueReference="6" description="x velocity from Mi to Mj in Ri coordinates" 
+            causality="input" variability="continuous">
+            <Real start="0." />
         </ScalarVariable>
 
-        <!-- index 8 --> 
-        <ScalarVariable name="Ri_F_Mi_abs" 
-            valueReference="7" description="Ri_F_Mi_abs" 
-            causality="output" variability="continuous" initial="calculated">
-            <Real/>
+        <!-- index 8 -->  
+        <ScalarVariable name="Ri_vy_MiMj" 
+            valueReference="7" description="y velocity from Mi to Mj in Ri coordinates" 
+            causality="input" variability="continuous">
+            <Real start="0." />
+        </ScalarVariable>
+
+        <!-- index 9 -->  
+        <ScalarVariable name="Ri_vz_MiMj" 
+            valueReference="8" description="z velocity from Mi to Mj in Ri coordinates" 
+            causality="input" variability="continuous">
+            <Real start="0." />
+        </ScalarVariable>
+
+        <!-- ############################## PARAMETER ########################### -->
+
+        <!-- index 10 -->  
+        <ScalarVariable name="k"              
+            valueReference="9" description="spring stiffness" 
+            causality="parameter" variability="fixed" initial="exact">
+            <Real start="50" />
+        </ScalarVariable>
+
+        <!-- index 11 -->  
+        <ScalarVariable name="c"              
+            valueReference="10" description="Damper damping" 
+            causality="parameter" variability="fixed" initial="exact">
+            <Real start="50" />
+        </ScalarVariable>
+
+        <!-- index 12 -->  
+        <ScalarVariable name="sigma0"              
+            valueReference="11" description="LuGre fric. stiffness" 
+            causality="parameter" variability="fixed" initial="exact">
+            <Real start="0.01" />
+        </ScalarVariable>
+
+        <!-- index 13 -->  
+        <ScalarVariable name="sigma1"              
+            valueReference="12" description="LuGre micro-damping" 
+            causality="parameter" variability="fixed" initial="exact">
+            <Real start="0.01" />
+        </ScalarVariable>
+
+        <!-- index 14 -->  
+        <ScalarVariable name="sigma2"              
+            valueReference="13" description="LuGre viscous fric. coef." 
+            causality="parameter" variability="fixed" initial="exact">
+            <Real start="0.1" />
+        </ScalarVariable>
+
+        <!-- index 15 -->  
+        <ScalarVariable name="alpha"              
+            valueReference="14" description="LuGre Stribeck form factor" 
+            causality="parameter" variability="fixed" initial="exact">
+            <Real start="1.0" />
+        </ScalarVariable>
+
+        <!-- index 16 -->  
+        <ScalarVariable name="mu_s"              
+            valueReference="15" description="LuGre Stiction fric. coeff." 
+            causality="parameter" variability="fixed" initial="exact">
+            <Real start="0.6" />
+        </ScalarVariable>
+
+        <!-- index 17 -->  
+        <ScalarVariable name="mu_c"              
+            valueReference="16" description="LuGre Coulomb fric. coeff." 
+            causality="parameter" variability="fixed" initial="exact">
+            <Real start="0.43" />
+        </ScalarVariable>
+
+        <!-- index 18 -->  
+        <ScalarVariable name="v_s"              
+            valueReference="17" description="LuGre charac. Stribeck-vel." 
+            causality="parameter" variability="fixed" initial="exact">
+            <Real start="1.0" />
         </ScalarVariable>
 
     </ModelVariables>
 
     <ModelStructure>
         <Outputs>
-            <Unknown index="5" />
-            <Unknown index="6" />
-            <Unknown index="7" />
-            <Unknown index="8" />
+            <Unknown index="1" />
+            <Unknown index="2" />
+            <Unknown index="3" />
         </Outputs>
         <InitialUnknowns>
-            <Unknown index="5" />
-            <Unknown index="6" />
-            <Unknown index="7" />
-            <Unknown index="8" />
+            <Unknown index="1" />
+            <Unknown index="2" />
+            <Unknown index="3" />
         </InitialUnknowns>
     </ModelStructure>
 
