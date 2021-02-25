@@ -73,7 +73,7 @@
 
         <!-- index 8 --> 
         <ScalarVariable name="Ri_F_Mi_abs" 
-            valueReference="6" description="Ri_F_Mi_abs" 
+            valueReference="7" description="Ri_F_Mi_abs" 
             causality="output" variability="continuous" initial="calculated">
             <Real/>
         </ScalarVariable>
