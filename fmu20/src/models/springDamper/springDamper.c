@@ -86,6 +86,16 @@ void gsl_vector_set_3D(gsl_vector *vec, double x, double y, double z){
     gsl_vector_set (vec, 2, z);
 }
 
+gsl_vector *gsl_vector_alloc_3D(){
+    gsl_vector *vec = gsl_vector_alloc (3);
+    gsl_vector_set_3D(vec, 0.,0.,0.);
+    return vec;
+}
+
+void print_gsl_vector_3D(gsl_vector *vec){
+    printf ("v=[%f,%f,%f]\n", vec->data[0], vec->data[1], vec->data[2]);
+}
+
 // define help variables
 gsl_vector *Ri_F_Mi, *Ri_r_MiMj, *Ri_v_MiMj, *F_dr_MiMj;
 
@@ -94,18 +104,19 @@ gsl_vector *Ri_F_Mi, *Ri_r_MiMj, *Ri_v_MiMj, *F_dr_MiMj;
 // Lazy set values for all variable that are computed from other variables.
 void calculateValues(ModelInstance *comp) {
     if (comp->state == modelInitializationMode) {
-        Ri_F_Mi   = gsl_vector_alloc (3);
-        Ri_r_MiMj = gsl_vector_alloc (3);
-        Ri_v_MiMj = gsl_vector_alloc (3);
-        F_dr_MiMj = gsl_vector_alloc (3);
+        Ri_F_Mi   = gsl_vector_alloc_3D();
+        Ri_r_MiMj = gsl_vector_alloc_3D();
+        Ri_v_MiMj = gsl_vector_alloc_3D();
+        F_dr_MiMj = gsl_vector_alloc_3D();
     }
 
     // Read input Ri_r_MiMj in array format
     gsl_vector_set_3D (Ri_r_MiMj, r(Ri_rx_MiMj_), r(Ri_ry_MiMj_), r(Ri_rz_MiMj_));
     // Read input Ri_v_MiMj in array format
     gsl_vector_set_3D (Ri_v_MiMj, r(Ri_vx_MiMj_), r(Ri_vy_MiMj_), r(Ri_vz_MiMj_));
+
     // init force output with zeros
-    gsl_vector_set_3D (Ri_v_MiMj, 0.,0.,0.);
+    gsl_vector_set_3D (Ri_F_Mi, 0.,0.,0.);
 
     /****************** Spring forces ********************/
     // spring forces:  Ri_F_Mi= k * Ri_r_MiMj
@@ -113,15 +124,13 @@ void calculateValues(ModelInstance *comp) {
 
     /****************** Damping forces ********************/
     // Ri_r_MiMj_dir = Ri_r_MiMj / norm2(Ri_r_MiMj)
-    gsl_vector *Ri_r_MiMj_dir = gsl_vector_alloc (3);
-    gsl_vector_set_3D(Ri_r_MiMj_dir, 0.,0.,0.);
+    gsl_vector *Ri_r_MiMj_dir = gsl_vector_alloc_3D();
     gsl_blas_daxpy( 1./gsl_blas_dnrm2(Ri_r_MiMj), Ri_r_MiMj, Ri_r_MiMj_dir);
 
     // Ri_dr_MiMj = proj( Ri_v_MiMj -> F_r_MiMj ) = Ri_r_MiMj_dir * dot( Ri_r_MiMj_dir, Ri_v_MiMj )
     double aux;
     gsl_blas_ddot( Ri_v_MiMj, Ri_r_MiMj_dir, &aux);
-    gsl_vector *Ri_dr_MiMj = gsl_vector_alloc (3);
-    gsl_vector_set_3D(Ri_dr_MiMj, 0.,0.,0.);
+    gsl_vector *Ri_dr_MiMj = gsl_vector_alloc_3D();
     gsl_blas_daxpy( aux, Ri_r_MiMj_dir, Ri_dr_MiMj);
 
     // spring forces:  Ri_F_Mi= c * F_dr_MiMj 
