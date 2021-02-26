@@ -128,7 +128,7 @@ void calculateValues(ModelInstance *comp) {
     // Ri_dr_MiMj = proj( Ri_v_MiMj -> F_r_MiMj ) = Ri_r_MiMj_dir * dot( Ri_r_MiMj_dir, Ri_v_MiMj )
     double aux;
     gsl_blas_ddot( Ri_v_MiMj, Ri_r_MiMj_dir, &aux);
-    gsl_vector *Ri_dr_MiMj;
+    gsl_vector *Ri_dr_MiMj = gsl_vector_alloc (3);
     gsl_blas_daxpy( aux, Ri_r_MiMj_dir, Ri_dr_MiMj);
 
     // spring forces:  Ri_F_Mi= c * F_dr_MiMj 
