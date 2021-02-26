@@ -101,23 +101,15 @@ void calculateValues(ModelInstance *comp) {
     }
 
     // Read input Ri_r_MiMj in array format
-    // gsl_vector_set (Ri_r_MiMj, 0, r(Ri_rx_MiMj_));
-    // gsl_vector_set (Ri_r_MiMj, 1, r(Ri_ry_MiMj_));
-    // gsl_vector_set (Ri_r_MiMj, 2, r(Ri_rz_MiMj_));
     gsl_vector_set_3D (Ri_r_MiMj, r(Ri_rx_MiMj_), r(Ri_ry_MiMj_), r(Ri_rz_MiMj_));
     // Read input Ri_v_MiMj in array format
-    gsl_vector_set (Ri_v_MiMj, 0, r(Ri_vx_MiMj_));
-    gsl_vector_set (Ri_v_MiMj, 1, r(Ri_vy_MiMj_));
-    gsl_vector_set (Ri_v_MiMj, 2, r(Ri_vz_MiMj_));
-    
+    gsl_vector_set_3D (Ri_v_MiMj, r(Ri_vx_MiMj_), r(Ri_vy_MiMj_), r(Ri_vz_MiMj_));
     // init force output with zeros
-    for(int i=0; i<=2; i++) 
-        gsl_vector_set(Ri_F_Mi, i, 0.);
+    gsl_vector_set_3D (Ri_v_MiMj, 0.,0.,0.);
 
     /****************** Spring forces ********************/
     // spring forces:  Ri_F_Mi= k * Ri_r_MiMj
     gsl_blas_daxpy( r(k_), Ri_r_MiMj, Ri_F_Mi);
-
 
     /****************** Damping forces ********************/
     // Ri_r_MiMj_dir = Ri_r_MiMj / norm2(Ri_r_MiMj)
@@ -129,6 +121,7 @@ void calculateValues(ModelInstance *comp) {
     double aux;
     gsl_blas_ddot( Ri_v_MiMj, Ri_r_MiMj_dir, &aux);
     gsl_vector *Ri_dr_MiMj = gsl_vector_alloc (3);
+    gsl_vector_set_3D(Ri_dr_MiMj, 0.,0.,0.);
     gsl_blas_daxpy( aux, Ri_r_MiMj_dir, Ri_dr_MiMj);
 
     // spring forces:  Ri_F_Mi= c * F_dr_MiMj 
