@@ -81,7 +81,7 @@ void setStartValues(ModelInstance *comp) {
 }
 
 // define help variables
-gsl_vector* Ri_F_Mi, Ri_r_MiMj, Ri_v_MiMj;
+gsl_vector *Ri_F_Mi, *Ri_r_MiMj, *Ri_v_MiMj;
 
 // called by fmi2GetReal, fmi2GetInteger, fmi2GetBoolean, fmi2GetString, fmi2ExitInitialization
 // if setStartValues or environment set new values through fmi2SetXXX.
@@ -94,18 +94,26 @@ void calculateValues(ModelInstance *comp) {
     }
 
     // Read inputs in array format
+    gsl_vector_set (Ri_r_MiMj, 0, r(Ri_rx_MiMj_));
+    gsl_vector_set (Ri_r_MiMj, 1, r(Ri_ry_MiMj_));
+    gsl_vector_set (Ri_r_MiMj, 2, r(Ri_rz_MiMj_));
+    gsl_vector_set (Ri_v_MiMj, 0, r(Ri_vx_MiMj_));
+    gsl_vector_set (Ri_v_MiMj, 1, r(Ri_vy_MiMj_));
+    gsl_vector_set (Ri_v_MiMj, 2, r(Ri_vz_MiMj_));
     
 
+    // init output with zeros
+    for(int i=0; i<=2; i++) gsl_vector_set(Ri_F_Mi, i, 0.);
+
     /****************** Spring forces ********************/
-    r(Ri_Fx_Mi_) = r(k_) * r(Ri_rx_MiMj_);
-    r(Ri_Fy_Mi_) = r(k_) * r(Ri_ry_MiMj_);
-    r(Ri_Fz_Mi_) = r(k_) * r(Ri_rz_MiMj_);
+    gsl_blas_daxpy( r(k_), Ri_r_MiMj, Ri_F_Mi);
 
-    gsl_vector_set (Ri_F_Mi, 0, r(Ri_Fx_Mi_));
-    gsl_vector_set (Ri_F_Mi, 1, r(Ri_Fy_Mi_));
-    gsl_vector_set (Ri_F_Mi, 2, r(Ri_Fz_Mi_));
+    /****************** Damping forces ********************/
 
-    // r(Ri_F_Mi_abs_) = (fmi2Real) gsl_blas_dnrm2(Ri_F_Mi);
+    
+    r(Ri_Fx_Mi_) = (fmi2Real) gsl_vector_get(Ri_F_Mi, 0);
+    r(Ri_Fy_Mi_) = (fmi2Real) gsl_vector_get(Ri_F_Mi, 1);
+    r(Ri_Fz_Mi_) = (fmi2Real) gsl_vector_get(Ri_F_Mi, 2);
 }
 
 // called by fmi2GetReal, fmi2GetContinuousStates and fmi2GetDerivatives
