@@ -61,10 +61,6 @@
 // Set values for all variables that define a start value
 // Settings used unless changed by fmi2SetX before fmi2EnterInitializationMode
 void setStartValues(ModelInstance *comp) {
-    // init input
-    r(Ri_Fx_Mi_) = 0.;
-    r(Ri_Fy_Mi_) = 0.;
-    r(Ri_Fz_Mi_) = 0.;
     // init outputs
     r(Ri_rx_MiMj_) = 0.;
     r(Ri_ry_MiMj_) = 0.;
@@ -134,18 +130,24 @@ void calculateValues(ModelInstance *comp) {
     gsl_blas_daxpy( r(k_), Ri_r_MiMj, Ri_F_Mi);
 
     /****************** Damping forces ********************/
-    // Ri_r_MiMj_dir = Ri_r_MiMj / norm2(Ri_r_MiMj)
-    gsl_vector_set_3D(Ri_r_MiMj_dir, (fmi2Real)0., (fmi2Real)0., (fmi2Real)0.);
-    gsl_blas_daxpy( 1./gsl_blas_dnrm2(Ri_r_MiMj), Ri_r_MiMj, Ri_r_MiMj_dir);
 
-    // Ri_dr_MiMj = proj( Ri_v_MiMj -> F_r_MiMj ) = Ri_r_MiMj_dir * dot( Ri_r_MiMj_dir, Ri_v_MiMj )
-    double aux;
-    gsl_blas_ddot( Ri_v_MiMj, Ri_r_MiMj_dir, &aux );
-    gsl_vector_set_3D( Ri_dr_MiMj, (fmi2Real) 0., (fmi2Real) 0., (fmi2Real)0.);
-    gsl_blas_daxpy( aux, Ri_r_MiMj_dir, Ri_dr_MiMj );
+    if ( gsl_blas_dnrm2(Ri_r_MiMj) != 0 ){
+        // Ri_r_MiMj_dir = Ri_r_MiMj / norm2(Ri_r_MiMj)
+        gsl_vector_set_3D(Ri_r_MiMj_dir, (fmi2Real)0., (fmi2Real)0., (fmi2Real)0.);
+        gsl_blas_daxpy( 1./gsl_blas_dnrm2(Ri_r_MiMj), Ri_r_MiMj, Ri_r_MiMj_dir);
 
+        // Ri_dr_MiMj = proj( Ri_v_MiMj -> F_r_MiMj ) = Ri_r_MiMj_dir * dot( Ri_r_MiMj_dir, Ri_v_MiMj )
+        double aux;
+        gsl_blas_ddot( Ri_v_MiMj, Ri_r_MiMj_dir, &aux );
+        gsl_vector_set_3D( Ri_dr_MiMj, (fmi2Real) 0., (fmi2Real) 0., (fmi2Real)0.);
+        gsl_blas_daxpy( aux, Ri_r_MiMj_dir, Ri_dr_MiMj );
+    }
+    else{
+        gsl_vector_memcpy(Ri_dr_MiMj, Ri_v_MiMj);
+    }
     // spring forces:  Ri_F_Mi = c * Ri_dr_MiMj 
     gsl_blas_daxpy( r(c_), Ri_dr_MiMj, Ri_F_Mi);
+
 
     // set FMU outputs
     gsl_vector_get_3D( Ri_F_Mi, &r(Ri_Fx_Mi_), &r(Ri_Fy_Mi_), &r(Ri_Fz_Mi_) );
