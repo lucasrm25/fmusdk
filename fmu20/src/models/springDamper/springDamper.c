@@ -61,16 +61,20 @@
 // Set values for all variables that define a start value
 // Settings used unless changed by fmi2SetX before fmi2EnterInitializationMode
 void setStartValues(ModelInstance *comp) {
+    // init input
+    r(Ri_Fx_Mi_) = 0.;
+    r(Ri_Fy_Mi_) = 0.;
+    r(Ri_Fz_Mi_) = 0.;
     // init outputs
-    r(Ri_rx_MiMj_) = 0;
-    r(Ri_ry_MiMj_) = 0;
-    r(Ri_rz_MiMj_) = 0;
-    r(Ri_vx_MiMj_) = 0;
-    r(Ri_vy_MiMj_) = 0;
-    r(Ri_vz_MiMj_) = 0;
+    r(Ri_rx_MiMj_) = 0.;
+    r(Ri_ry_MiMj_) = 0.;
+    r(Ri_rz_MiMj_) = 0.;
+    r(Ri_vx_MiMj_) = 0.;
+    r(Ri_vy_MiMj_) = 0.;
+    r(Ri_vz_MiMj_) = 0.;
     // init parameters
-    r(k_)          = 50;
-    r(c_)          = 50; 
+    r(k_)          = 50.;
+    r(c_)          = 50.; 
     r(sigma0_)     = 0.01;     
     r(sigma1_)     = 0.01;     
     r(sigma2_)     = 0.1;     
