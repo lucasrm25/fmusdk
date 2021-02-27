@@ -2,7 +2,7 @@ mkdir -p debug
 cd debug
 cmake -DCMAKE_BUILD_TYPE=Debug ..
 # cmake -S . -B build --trace-source=CMakeLists.txt
-make clean
+# make clean
 make VERBOSE=1
 # make test
 echo ""
