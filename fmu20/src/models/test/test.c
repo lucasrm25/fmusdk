@@ -10,7 +10,7 @@
 #define MODEL_GUID "{8c4e810f-3df3-4a00-8276-176fa3c9f004}"
 
 // define model size
-#define NUMBER_OF_REALS 10
+#define NUMBER_OF_REALS 18
 #define NUMBER_OF_INTEGERS 0
 #define NUMBER_OF_BOOLEANS 0
 #define NUMBER_OF_STRINGS 0
@@ -39,6 +39,14 @@
 #define Ri_vz_MiMj_     8
 // parameters
 #define k_              9
+#define c_             10
+#define sigma0_        11
+#define sigma1_        12
+#define sigma2_        13
+#define alpha_         14
+#define mu_s_          15
+#define mu_c_          16
+#define v_s_           17
 
 // define state vector as vector of value references 
 // #define STATES {  }
@@ -61,6 +69,14 @@ void setStartValues(ModelInstance *comp) {
     r(Ri_vz_MiMj_) = 0.;
     // init parameters
     r(k_)          = 50.;
+    r(c_)          = 50.; 
+    r(sigma0_)     = 0.01;     
+    r(sigma1_)     = 0.01;     
+    r(sigma2_)     = 0.1;     
+    r(alpha_)      = 1.;     
+    r(mu_s_)       = 0.6;     
+    r(mu_c_)       = 0.43;     
+    r(v_s_)        = 1.; 
 }
 
 // called by fmi2GetReal, fmi2GetInteger, fmi2GetBoolean, fmi2GetString, fmi2ExitInitialization
