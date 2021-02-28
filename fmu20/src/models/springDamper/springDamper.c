@@ -154,9 +154,9 @@ void calculateValues(ModelInstance *comp) {
     // set FMU outputs
     gsl_vector_get_3D( Ri_F_Mi, &r(Ri_Fx_Mi_), &r(Ri_Fy_Mi_), &r(Ri_Fz_Mi_) );
 
-    r(Ri_Fx_Mi_) = r(k_) * r(Ri_rx_MiMj_);
-    r(Ri_Fy_Mi_) = r(k_) * r(Ri_ry_MiMj_);
-    r(Ri_Fz_Mi_) = r(k_) * r(Ri_rz_MiMj_);
+    // r(Ri_Fx_Mi_) = r(k_) * r(Ri_rx_MiMj_);
+    // r(Ri_Fy_Mi_) = r(k_) * r(Ri_ry_MiMj_);
+    // r(Ri_Fz_Mi_) = r(k_) * r(Ri_rz_MiMj_);
 
 }
 
