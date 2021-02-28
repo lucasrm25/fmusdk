@@ -53,7 +53,7 @@
 #define mu_c_          16
 #define v_s_           17
 
-// define state vector as vector of value references
+// define state vector as vector of value references 
 // #define STATES {  }
 
 
@@ -131,22 +131,22 @@ void calculateValues(ModelInstance *comp) {
 
     /****************** Damping forces ********************/
 
-    if ( gsl_blas_dnrm2(Ri_r_MiMj) != 0 ){
-        // Ri_r_MiMj_dir = Ri_r_MiMj / norm2(Ri_r_MiMj)
-        gsl_vector_set_3D(Ri_r_MiMj_dir, (fmi2Real)0., (fmi2Real)0., (fmi2Real)0.);
-        gsl_blas_daxpy( 1./gsl_blas_dnrm2(Ri_r_MiMj), Ri_r_MiMj, Ri_r_MiMj_dir);
+    // if ( gsl_blas_dnrm2(Ri_r_MiMj) > 1e-10 ){
+    //     // Ri_r_MiMj_dir = Ri_r_MiMj / norm2(Ri_r_MiMj)
+    //     gsl_vector_set_3D(Ri_r_MiMj_dir, (fmi2Real)0., (fmi2Real)0., (fmi2Real)0.);
+    //     gsl_blas_daxpy( 1./gsl_blas_dnrm2(Ri_r_MiMj), Ri_r_MiMj, Ri_r_MiMj_dir);
 
-        // Ri_dr_MiMj = proj( Ri_v_MiMj -> F_r_MiMj ) = Ri_r_MiMj_dir * dot( Ri_r_MiMj_dir, Ri_v_MiMj )
-        double aux;
-        gsl_blas_ddot( Ri_v_MiMj, Ri_r_MiMj_dir, &aux );
-        gsl_vector_set_3D( Ri_dr_MiMj, (fmi2Real) 0., (fmi2Real) 0., (fmi2Real)0.);
-        gsl_blas_daxpy( aux, Ri_r_MiMj_dir, Ri_dr_MiMj );
-    }
-    else{
-        gsl_vector_memcpy(Ri_dr_MiMj, Ri_v_MiMj);
-    }
-    // spring forces:  Ri_F_Mi = c * Ri_dr_MiMj 
-    gsl_blas_daxpy( r(c_), Ri_dr_MiMj, Ri_F_Mi);
+    //     // Ri_dr_MiMj = proj( Ri_v_MiMj -> F_r_MiMj ) = Ri_r_MiMj_dir * dot( Ri_r_MiMj_dir, Ri_v_MiMj )
+    //     double aux;
+    //     gsl_blas_ddot( Ri_v_MiMj, Ri_r_MiMj_dir, &aux );
+    //     gsl_vector_set_3D( Ri_dr_MiMj, (fmi2Real) 0., (fmi2Real) 0., (fmi2Real)0.);
+    //     gsl_blas_daxpy( aux, Ri_r_MiMj_dir, Ri_dr_MiMj );
+    // }
+    // else{
+    //     gsl_vector_memcpy(Ri_dr_MiMj, Ri_v_MiMj);
+    // }
+    // // spring forces:  Ri_F_Mi = c * Ri_dr_MiMj 
+    // gsl_blas_daxpy( r(c_), Ri_dr_MiMj, Ri_F_Mi);
 
 
     // set FMU outputs
