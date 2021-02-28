@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<fmiModelDescription 
+    fmiVersion="2.0" 
+    modelName="test" 
+    guid="{8c4e810f-3df3-4a00-8276-176fa3c9f004}" 
+    numberOfEventIndicators="0"
+    description="Force element of type Spring-Damper with LuGre friction model">
+
+    <ModelExchange 
+        modelIdentifier="test">
+        <SourceFiles>
+            <File name="test.c" />
+        </SourceFiles>
+    </ModelExchange>
+
+    <LogCategories>
+        <Category name="logAll" />
+        <Category name="logError" />
+        <Category name="logFmiCall" />
+        <Category name="logEvent" />
+    </LogCategories>
+
+    <ModelVariables>
+
+        <!-- ############################## OUTPUTS ########################### -->
+
+        <!-- index 1 --> 
+        <ScalarVariable name="Ri_Fx_Mi" 
+            valueReference="0" description="Ri_Fx_Mi" 
+            causality="output" variability="continuous" initial="calculated">
+            <Real/>
+        </ScalarVariable>
+
+        <!-- index 2 --> 
+        <ScalarVariable name="Ri_Fy_Mi" 
+            valueReference="1" description="Ri_Fy_Mi" 
+            causality="output" variability="continuous" initial="calculated">
+            <Real/>
+        </ScalarVariable>
+
+        <!-- index 3 --> 
+        <ScalarVariable name="Ri_Fz_Mi" 
+            valueReference="2" description="Ri_Fz_Mi" 
+            causality="output" variability="continuous" initial="calculated">
+            <Real/>
+        </ScalarVariable>
+
+        <!-- ############################## INPUTS ########################### -->
+
+        <!-- index 4 -->  
+        <ScalarVariable name="Ri_rx_MiMj" 
+            valueReference="3" description="x distance from Mi to Mj in Ri coordinates" 
+            causality="input" variability="continuous">
+            <Real start="0." />
+        </ScalarVariable>
+
+        <!-- index 5 -->  
+        <ScalarVariable name="Ri_ry_MiMj" 
+            valueReference="4" description="y distance from Mi to Mj in Ri coordinates" 
+            causality="input" variability="continuous">
+            <Real start="0." />
+        </ScalarVariable>
+
+        <!-- index 6 -->  
+        <ScalarVariable name="Ri_rz_MiMj" 
+            valueReference="5" description="z distance from Mi to Mj in Ri coordinates" 
+            causality="input" variability="continuous">
+            <Real start="0." />
+        </ScalarVariable>
+
+        <!-- ############################## PARAMETER ########################### -->
+
+        <!-- index 7 -->  
+        <ScalarVariable name="k"              
+            valueReference="6" description="spring stiffness" 
+            causality="parameter" variability="fixed" initial="exact">
+            <Real start="50" />
+        </ScalarVariable>
+
+    </ModelVariables>
+
+    <ModelStructure>
+        <Outputs>
+            <Unknown index="1"/>
+            <Unknown index="2"/>
+            <Unknown index="3"/>
+        </Outputs>
+        <InitialUnknowns>
+            <Unknown index="1"/>
+            <Unknown index="2"/>
+            <Unknown index="3"/>
+        </InitialUnknowns>
+    </ModelStructure>
+
+</fmiModelDescription>

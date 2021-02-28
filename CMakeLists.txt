@@ -45,8 +45,9 @@ project (FMUSDK)
 MESSAGE("\n * ********* Setting up compilation for FMU models ************")
 
 list(APPEND MODEL1 20 me springDamper)
-list(APPEND MODEL2 20 me dq)
-list(APPEND MODELS MODEL1 MODEL2)
+# list(APPEND MODEL2 20 me dq)
+list(APPEND MODEL3 20 me test)
+list(APPEND MODELS MODEL1 MODEL3)
 
 
 foreach(MODEL ${MODELS})
@@ -309,13 +310,7 @@ foreach(MODEL ${MODELS})
 endforeach(MODEL)
 
 
-# foreach (FMI_VERSION 10 20)
-# foreach (FMI_TYPE cs me)
-# foreach (MODEL_NAME bouncingBall dq inc values vanDerPol) # springDamper
 
-# endforeach(MODEL_NAME)
-# endforeach(FMI_TYPE)
-# endforeach(FMI_VERSION)
 # -------------------------------------------------------------------------------------
 # --------------------- test simulators and models ------------------------------------
 # -------------------------------------------------------------------------------------
