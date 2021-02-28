@@ -62,6 +62,10 @@
 // Settings used unless changed by fmi2SetX before fmi2EnterInitializationMode
 void setStartValues(ModelInstance *comp) {
     // init outputs
+    r(Ri_Fx_Mi_) = 0.;
+    r(Ri_Fy_Mi_) = 0.;
+    r(Ri_Fz_Mi_) = 0.;
+    // init inputs
     r(Ri_rx_MiMj_) = 0.;
     r(Ri_ry_MiMj_) = 0.;
     r(Ri_rz_MiMj_) = 0.;
