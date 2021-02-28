@@ -27,22 +27,22 @@
         <!-- index 1 --> 
         <ScalarVariable name="Ri_Fx_Mi" 
             valueReference="0" description="Ri_Fx_Mi" 
-            causality="output" variability="continuous" initial="calculated">
-            <Real/>
+            causality="output" variability="continuous" initial="exact">
+            <Real start="0."/>
         </ScalarVariable>
 
         <!-- index 2 --> 
         <ScalarVariable name="Ri_Fy_Mi" 
             valueReference="1" description="Ri_Fy_Mi" 
-            causality="output" variability="continuous" initial="calculated">
-            <Real/>
+            causality="output" variability="continuous" initial="exact">
+            <Real start="0."/>
         </ScalarVariable>
 
         <!-- index 3 --> 
         <ScalarVariable name="Ri_Fz_Mi" 
             valueReference="2" description="Ri_Fz_Mi" 
-            causality="output" variability="continuous" initial="calculated">
-            <Real/>
+            causality="output" variability="continuous" initial="exact">
+            <Real start="0."/>
         </ScalarVariable>
 
         <!-- ############################## INPUTS ########################### -->
