@@ -20,10 +20,9 @@
 // include fmu header files, typedefs and macros
 #include "fmuTemplate.h"
 
-#define ZIP_GSL_BINARIES_WITH_FMU 1
-#include "gsl/gsl_matrix.h"
-#include "gsl/gsl_linalg.h"
-#include "gsl/gsl_blas.h"
+// #include "gsl/gsl_matrix.h"
+// #include "gsl/gsl_linalg.h"
+// #include "gsl/gsl_blas.h"
 
 // define all model variables and their value references
 // conventions used here:
@@ -84,43 +83,43 @@ void setStartValues(ModelInstance *comp) {
     r(v_s_)        = 1.; 
 }
 
-void gsl_vector_set_3D(gsl_vector *vec, double x, double y, double z){
-    gsl_vector_set (vec, 0, (fmi2Real) x);
-    gsl_vector_set (vec, 1, (fmi2Real) y);
-    gsl_vector_set (vec, 2, (fmi2Real) z);
-}
+// void gsl_vector_set_3D(gsl_vector *vec, double x, double y, double z){
+//     gsl_vector_set (vec, 0, (fmi2Real) x);
+//     gsl_vector_set (vec, 1, (fmi2Real) y);
+//     gsl_vector_set (vec, 2, (fmi2Real) z);
+// }
 
-void gsl_vector_get_3D(gsl_vector *vec, fmi2Real *x, fmi2Real *y, fmi2Real *z){
-    *x = gsl_vector_get (vec, 0);
-    *y = gsl_vector_get (vec, 1);
-    *z = gsl_vector_get (vec, 2);
-}
+// void gsl_vector_get_3D(gsl_vector *vec, fmi2Real *x, fmi2Real *y, fmi2Real *z){
+//     *x = gsl_vector_get (vec, 0);
+//     *y = gsl_vector_get (vec, 1);
+//     *z = gsl_vector_get (vec, 2);
+// }
 
-gsl_vector *gsl_vector_alloc_3D(){
-    gsl_vector *vec = gsl_vector_alloc (3);
-    gsl_vector_set_3D(vec, (fmi2Real) 0., (fmi2Real) 0., (fmi2Real) 0.);
-    return vec;
-}
+// gsl_vector *gsl_vector_alloc_3D(){
+//     gsl_vector *vec = gsl_vector_alloc (3);
+//     gsl_vector_set_3D(vec, (fmi2Real) 0., (fmi2Real) 0., (fmi2Real) 0.);
+//     return vec;
+// }
 
-void print_gsl_vector_3D(gsl_vector *vec){
-    printf ("v=[%f,%f,%f]\n", vec->data[0], vec->data[1], vec->data[2]);
-}
+// void print_gsl_vector_3D(gsl_vector *vec){
+//     printf ("v=[%f,%f,%f]\n", vec->data[0], vec->data[1], vec->data[2]);
+// }
 
-// define help variables
-gsl_vector *Ri_F_Mi, *Ri_r_MiMj, *Ri_v_MiMj, *Ri_r_MiMj_dir, *Ri_dr_MiMj;
-double aux;
+// // define help variables
+// gsl_vector *Ri_F_Mi, *Ri_r_MiMj, *Ri_v_MiMj, *Ri_r_MiMj_dir, *Ri_dr_MiMj;
+// double aux;
 
 // called by fmi2GetReal, fmi2GetInteger, fmi2GetBoolean, fmi2GetString, fmi2ExitInitialization
 // if setStartValues or environment set new values through fmi2SetXXX.
 // Lazy set values for all variable that are computed from other variables.
 void calculateValues(ModelInstance *comp) {
-    if (comp->state == modelInitializationMode) {
-        Ri_F_Mi         = gsl_vector_alloc_3D();
-        Ri_r_MiMj       = gsl_vector_alloc_3D();
-        Ri_v_MiMj       = gsl_vector_alloc_3D();
-        Ri_r_MiMj_dir   = gsl_vector_alloc_3D();
-        Ri_dr_MiMj      = gsl_vector_alloc_3D();
-    }
+    // if (comp->state == modelInitializationMode) {
+    //     Ri_F_Mi         = gsl_vector_alloc_3D();
+    //     Ri_r_MiMj       = gsl_vector_alloc_3D();
+    //     Ri_v_MiMj       = gsl_vector_alloc_3D();
+    //     Ri_r_MiMj_dir   = gsl_vector_alloc_3D();
+    //     Ri_dr_MiMj      = gsl_vector_alloc_3D();
+    // }
 
     // // init force output with zeros
     // gsl_vector_set_3D (Ri_F_Mi, 0.,0.,0.);
