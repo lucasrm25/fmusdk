@@ -68,11 +68,32 @@
             <Real start="0." />
         </ScalarVariable>
 
+        <!-- index 7 -->  
+        <ScalarVariable name="Ri_vx_MiMj" 
+            valueReference="6" description="x velocity from Mi to Mj in Ri coordinates" 
+            causality="input" variability="continuous">
+            <Real start="0." />
+        </ScalarVariable>
+
+        <!-- index 8 -->  
+        <ScalarVariable name="Ri_vy_MiMj" 
+            valueReference="7" description="y velocity from Mi to Mj in Ri coordinates" 
+            causality="input" variability="continuous">
+            <Real start="0." />
+        </ScalarVariable>
+
+        <!-- index 9 -->  
+        <ScalarVariable name="Ri_vz_MiMj" 
+            valueReference="8" description="z velocity from Mi to Mj in Ri coordinates" 
+            causality="input" variability="continuous">
+            <Real start="0." />
+        </ScalarVariable>
+
         <!-- ############################## PARAMETER ########################### -->
 
-        <!-- index 7 -->  
+        <!-- index 10 -->  
         <ScalarVariable name="k"              
-            valueReference="6" description="spring stiffness" 
+            valueReference="9" description="spring stiffness" 
             causality="parameter" variability="fixed" initial="exact">
             <Real start="50" />
         </ScalarVariable>

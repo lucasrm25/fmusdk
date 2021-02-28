@@ -10,7 +10,7 @@
 #define MODEL_GUID "{8c4e810f-3df3-4a00-8276-176fa3c9f004}"
 
 // define model size
-#define NUMBER_OF_REALS 7
+#define NUMBER_OF_REALS 10
 #define NUMBER_OF_INTEGERS 0
 #define NUMBER_OF_BOOLEANS 0
 #define NUMBER_OF_STRINGS 0
@@ -34,8 +34,11 @@
 #define Ri_rx_MiMj_     3
 #define Ri_ry_MiMj_     4
 #define Ri_rz_MiMj_     5
+#define Ri_vx_MiMj_     6
+#define Ri_vy_MiMj_     7
+#define Ri_vz_MiMj_     8
 // parameters
-#define k_              6
+#define k_              9
 
 // define state vector as vector of value references 
 // #define STATES {  }
@@ -53,6 +56,9 @@ void setStartValues(ModelInstance *comp) {
     r(Ri_rx_MiMj_) = 0.;
     r(Ri_ry_MiMj_) = 0.;
     r(Ri_rz_MiMj_) = 0.;
+    r(Ri_vx_MiMj_) = 0.;
+    r(Ri_vy_MiMj_) = 0.;
+    r(Ri_vz_MiMj_) = 0.;
     // init parameters
     r(k_)          = 50.;
 }
