@@ -10,7 +10,7 @@
 #define MODEL_GUID "{8c4e810f-3df3-4a00-8276-176fa3c9f004}"
 
 // define model size
-#define NUMBER_OF_REALS 18
+#define NUMBER_OF_REALS 20
 #define NUMBER_OF_INTEGERS 0
 #define NUMBER_OF_BOOLEANS 0
 #define NUMBER_OF_STRINGS 0
@@ -51,9 +51,11 @@
 #define mu_s_          15
 #define mu_c_          16
 #define v_s_           17
+#define z_             18
+#define der_z_         19
 
 // define state vector as vector of value references 
-// #define STATES {  }
+#define STATES { z_ }
 
 
 // called by fmi2Instantiate
@@ -81,6 +83,8 @@ void setStartValues(ModelInstance *comp) {
     r(mu_s_)       = 0.6;     
     r(mu_c_)       = 0.43;     
     r(v_s_)        = 1.; 
+    // init states
+    r(z_)          = 0.;
 }
 
 void gsl_vector_set_3D(gsl_vector *vec, double x, double y, double z){
@@ -153,17 +157,14 @@ void calculateValues(ModelInstance *comp) {
 
     // set FMU outputs
     gsl_vector_get_3D( Ri_F_Mi, &r(Ri_Fx_Mi_), &r(Ri_Fy_Mi_), &r(Ri_Fz_Mi_) );
-
-    // r(Ri_Fx_Mi_) = r(k_) * r(Ri_rx_MiMj_);
-    // r(Ri_Fy_Mi_) = r(k_) * r(Ri_ry_MiMj_);
-    // r(Ri_Fz_Mi_) = r(k_) * r(Ri_rz_MiMj_);
-
 }
 
 // called by fmi2GetReal, fmi2GetContinuousStates and fmi2GetDerivatives
 fmi2Real getReal(ModelInstance *comp, fmi2ValueReference vr){
-    // all values are real at the moment
-    return r(vr);
+    switch (vr) {
+        case der_z_ : return 0.;
+        default     : return r(vr);
+    }
 }
 
 // used to set the next time event, if any.

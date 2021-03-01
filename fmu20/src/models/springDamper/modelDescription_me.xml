@@ -154,18 +154,40 @@
             <Real start="1.0" />
         </ScalarVariable>
 
+        <!-- ############################## STATES ########################### -->
+
+        <!-- index 19 -->  
+        <ScalarVariable name="z"              
+            valueReference="18" description="LuGre internal stiction state" 
+            causality="local" variability="continuous" initial="exact">
+            <Real start="0.0" />
+        </ScalarVariable>
+
+        <!-- index 20 -->  
+        <ScalarVariable name="der(z)" 
+            valueReference="19" description="der(z)"
+            causality="local" variability="continuous" initial="calculated">
+        <Real derivative="19"/>
+        </ScalarVariable>
+
     </ModelVariables>
 
     <ModelStructure>
         <Outputs>
+            <!-- outputs -->
             <Unknown index="1"/>
             <Unknown index="2"/>
             <Unknown index="3"/>
+            <!-- states derivatives -->
+            <Unknown index="20"/>
         </Outputs>
         <InitialUnknowns>
+            <!-- outputs -->
             <Unknown index="1"/>
             <Unknown index="2"/>
             <Unknown index="3"/>
+            <!-- states derivatives -->
+            <Unknown index="20"/>
         </InitialUnknowns>
     </ModelStructure>
 

@@ -46,8 +46,8 @@ MESSAGE("\n * ********* Setting up compilation for FMU models ************")
 
 list(APPEND MODEL1 20 me springDamper)
 # list(APPEND MODEL2 20 me dq)
-list(APPEND MODEL3 20 me test)
-list(APPEND MODELS MODEL1 MODEL3)
+# list(APPEND MODEL3 20 me test)
+list(APPEND MODELS MODEL1)
 
 
 foreach(MODEL ${MODELS})
