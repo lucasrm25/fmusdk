@@ -1,7 +1,14 @@
 /* ---------------------------------------------------------------------------*
- * Sample implementation of an FMU.
- * This demonstrates the use of all FMU variable types.
- * Copyright QTronic GmbH. All rights reserved.
+ * Author: Lucas Rath (EF-234)
+ * 
+ * Force element of type Spring-Damper with LuGre friction model
+ * 
+ * Frame Notation:
+ *      (Mi) - "from" marker
+ *      (Mj) - "to" marker
+ *      (I)  - inertial marker
+ *      (Ri) - body reference frame of "from" body
+ *      (F)  - frame positioned at (Mi), whose z axis is always pointing to (Mj)
  * ---------------------------------------------------------------------------*/
 
 
@@ -10,12 +17,12 @@
 #define MODEL_GUID "{8c4e810f-3df3-4a00-8276-176fa3c9f004}"
 
 // define model size
-#define NUMBER_OF_REALS 20
-#define NUMBER_OF_INTEGERS 0
-#define NUMBER_OF_BOOLEANS 0
-#define NUMBER_OF_STRINGS 0
-#define NUMBER_OF_STATES 0
-#define NUMBER_OF_EVENT_INDICATORS 0
+#define NUMBER_OF_REALS             20
+#define NUMBER_OF_INTEGERS          0
+#define NUMBER_OF_BOOLEANS          0
+#define NUMBER_OF_STRINGS           0
+#define NUMBER_OF_STATES            1
+#define NUMBER_OF_EVENT_INDICATORS  0
 
 // include fmu header files, typedefs and macros
 #include "fmuTemplate.h"
@@ -62,10 +69,6 @@
 // Set values for all variables that define a start value
 // Settings used unless changed by fmi2SetX before fmi2EnterInitializationMode
 void setStartValues(ModelInstance *comp) {
-    // init outputs
-    r(Ri_Fx_Mi_) = 0.;
-    r(Ri_Fy_Mi_) = 0.;
-    r(Ri_Fz_Mi_) = 0.;
     // init inputs
     r(Ri_rx_MiMj_) = 0.;
     r(Ri_ry_MiMj_) = 0.;
@@ -105,13 +108,19 @@ gsl_vector *gsl_vector_alloc_3D(){
     return vec;
 }
 
+gsl_vector *ones(int n){
+    gsl_vector *vec = gsl_vector_alloc (n);
+    for (int j; j<n; j++)
+        gsl_vector_set(vec, j, (fmi2Real) 1.);
+}
+
 void print_gsl_vector_3D(gsl_vector *vec){
     printf ("v=[%f,%f,%f]\n", vec->data[0], vec->data[1], vec->data[2]);
 }
 
 // define help variables
-gsl_vector *Ri_F_Mi, *Ri_r_MiMj, *Ri_v_MiMj, *Ri_r_MiMj_dir, *Ri_dr_MiMj;
-double aux;
+gsl_vector *Ri_F_Mi, *Ri_r_MiMj, *Ri_v_MiMj, *Ri_r_MiMj_dir, *Ri_dr_MiMj, *F_F_Mi, *F_r_MiMj, *F_dr_MiMj;
+fmi2Real F_drz_MiMj;
 
 // called by fmi2GetReal, fmi2GetInteger, fmi2GetBoolean, fmi2GetString, fmi2ExitInitialization
 // if setStartValues or environment set new values through fmi2SetXXX.
@@ -123,47 +132,77 @@ void calculateValues(ModelInstance *comp) {
         Ri_v_MiMj       = gsl_vector_alloc_3D();
         Ri_r_MiMj_dir   = gsl_vector_alloc_3D();
         Ri_dr_MiMj      = gsl_vector_alloc_3D();
+        F_F_Mi          = gsl_vector_alloc_3D();
+        F_r_MiMj        = gsl_vector_alloc_3D();
+        F_dr_MiMj       = gsl_vector_alloc_3D();
     }
 
     // init force output with zeros
-    gsl_vector_set_3D (Ri_F_Mi, 0.,0.,0.);
+    gsl_vector_set_3D (F_F_Mi, 0.,0.,0.);
 
+
+    /******************** Read inputs ********************/
     // Read input Ri_r_MiMj in array format
     gsl_vector_set_3D (Ri_r_MiMj, r(Ri_rx_MiMj_), r(Ri_ry_MiMj_), r(Ri_rz_MiMj_));
     // Read input Ri_v_MiMj in array format
     gsl_vector_set_3D (Ri_v_MiMj, r(Ri_vx_MiMj_), r(Ri_vy_MiMj_), r(Ri_vz_MiMj_));
 
+
+    /******** Calculate local frame (F) kin. *************/
+    // Ri_r_MiMj_dir = Ri_r_MiMj / norm2(Ri_r_MiMj)
+    gsl_vector_set_3D(Ri_r_MiMj_dir, 0., 0., 0.);
+    gsl_blas_daxpy( 1./gsl_blas_dnrm2(Ri_r_MiMj), Ri_r_MiMj, Ri_r_MiMj_dir);
+    // F_drz_MiMj = <Ri_v_MiMj,Ri_r_MiMj_dir>
+    gsl_blas_ddot( Ri_v_MiMj, Ri_r_MiMj_dir, &F_drz_MiMj );
+
+    gsl_vector_set_3D (F_r_MiMj,  0., 0., gsl_blas_dnrm2(Ri_r_MiMj) );
+    gsl_vector_set_3D (F_dr_MiMj, 0., 0., F_drz_MiMj);
+
+
     /****************** Spring forces ********************/
-    // spring forces:  Ri_F_Mi= k * Ri_r_MiMj
-    gsl_blas_daxpy( r(k_), Ri_r_MiMj, Ri_F_Mi);
+    // spring forces:  F_F_Mi= k * F_r_MiMj
+    gsl_blas_daxpy( r(k_), F_r_MiMj, F_F_Mi);
 
     /****************** Damping forces ********************/
+    // damping forces:  Ri_F_Mi = c * Ri_dr_MiMj 
+    gsl_blas_daxpy( r(c_), F_dr_MiMj, F_F_Mi);
 
-    if ( gsl_blas_dnrm2(Ri_r_MiMj) > 1e-10 ){
-        // Ri_r_MiMj_dir = Ri_r_MiMj / norm2(Ri_r_MiMj)
-        gsl_vector_set_3D(Ri_r_MiMj_dir, 0., 0., 0.);
-        gsl_blas_daxpy( 1./gsl_blas_dnrm2(Ri_r_MiMj), Ri_r_MiMj, Ri_r_MiMj_dir);
+    /****************** Friction forces ********************/
+    // friction forces: Ri_F_Mi = sigma0* z + sigma1* dz + sigma2* F_drz_MiMj
+    gsl_blas_daxpy( 
+        r(sigma0_) * r(z_)        + 
+        r(sigma1_) * r(der_z_)    + 
+        r(sigma2_) * F_drz_MiMj,
+        ones(3), F_F_Mi
+    );
 
-        // Ri_dr_MiMj = proj( Ri_v_MiMj -> F_r_MiMj ) = Ri_r_MiMj_dir * dot( Ri_r_MiMj_dir, Ri_v_MiMj )
-        gsl_blas_ddot( Ri_v_MiMj, Ri_r_MiMj_dir, &aux );
-        gsl_vector_set_3D( Ri_dr_MiMj, 0., 0., 0.);
-        gsl_blas_daxpy( aux, Ri_r_MiMj_dir, Ri_dr_MiMj );
-    }
-    else{
-        gsl_vector_memcpy(Ri_dr_MiMj, Ri_v_MiMj);
-    }
-    // spring forces:  Ri_F_Mi = c * Ri_dr_MiMj 
-    gsl_blas_daxpy( r(c_), Ri_dr_MiMj, Ri_F_Mi);
-
-    // set FMU outputs
+    /****************** Set FMU outputs ********************/
+    // Ri_F_Mi = F_F_Mi(2) * Ri_r_MiMj_dir
+    gsl_vector_set_3D( Ri_F_Mi, 0.,0.,0. );
+    gsl_blas_daxpy( gsl_vector_get(F_F_Mi,2), Ri_r_MiMj_dir, Ri_F_Mi);
+    // set outputs
     gsl_vector_get_3D( Ri_F_Mi, &r(Ri_Fx_Mi_), &r(Ri_Fy_Mi_), &r(Ri_Fz_Mi_) );
 }
+
+fmi2Real Fn, Fs, Fc, g, dz;
 
 // called by fmi2GetReal, fmi2GetContinuousStates and fmi2GetDerivatives
 fmi2Real getReal(ModelInstance *comp, fmi2ValueReference vr){
     switch (vr) {
-        case der_z_ : return 0.;
-        default     : return r(vr);
+        case der_z_ :
+            // normal force magnitude between friction surfaces
+            Fn = 10;
+            // stiction force magnitude
+            Fs = - r(mu_s_) * Fn; 
+            // Coulomb friction force magnitude
+            Fc = - r(mu_c_) * Fn;
+            // Coulomb friction and Stribeck effect
+            g = Fc + (Fs - Fc) * exp( - pow( abs(F_drz_MiMj/r(v_s_)), r(alpha_) ) );
+            // calculate LuGre internal stiction state derivative
+            dz = F_drz_MiMj - r(sigma0_)*(abs(F_drz_MiMj)/g) * r(z_);
+            return dz;
+        default: 
+            return r(vr);
     }
 }
 

@@ -122,17 +122,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named test_20_me
+# Target rules for targets named fmusim_10_cs
 
 # Build rule for target.
-test_20_me: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 test_20_me
-.PHONY : test_20_me
+fmusim_10_cs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 fmusim_10_cs
+.PHONY : fmusim_10_cs
 
 # fast build rule for target.
-test_20_me/fast:
-	$(MAKE) -f CMakeFiles/test_20_me.dir/build.make CMakeFiles/test_20_me.dir/build
-.PHONY : test_20_me/fast
+fmusim_10_cs/fast:
+	$(MAKE) -f CMakeFiles/fmusim_10_cs.dir/build.make CMakeFiles/fmusim_10_cs.dir/build
+.PHONY : fmusim_10_cs/fast
 
 #=============================================================================
 # Target rules for targets named springDamper_20_me
@@ -146,19 +146,6 @@ springDamper_20_me: cmake_check_build_system
 springDamper_20_me/fast:
 	$(MAKE) -f CMakeFiles/springDamper_20_me.dir/build.make CMakeFiles/springDamper_20_me.dir/build
 .PHONY : springDamper_20_me/fast
-
-#=============================================================================
-# Target rules for targets named fmusim_10_cs
-
-# Build rule for target.
-fmusim_10_cs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 fmusim_10_cs
-.PHONY : fmusim_10_cs
-
-# fast build rule for target.
-fmusim_10_cs/fast:
-	$(MAKE) -f CMakeFiles/fmusim_10_cs.dir/build.make CMakeFiles/fmusim_10_cs.dir/build
-.PHONY : fmusim_10_cs/fast
 
 #=============================================================================
 # Target rules for targets named fmusim_20_cs
@@ -454,33 +441,6 @@ fmu20/src/models/springDamper/springDamper.c.s:
 	$(MAKE) -f CMakeFiles/springDamper_20_me.dir/build.make CMakeFiles/springDamper_20_me.dir/fmu20/src/models/springDamper/springDamper.c.s
 .PHONY : fmu20/src/models/springDamper/springDamper.c.s
 
-fmu20/src/models/test/test.o: fmu20/src/models/test/test.c.o
-
-.PHONY : fmu20/src/models/test/test.o
-
-# target to build an object file
-fmu20/src/models/test/test.c.o:
-	$(MAKE) -f CMakeFiles/test_20_me.dir/build.make CMakeFiles/test_20_me.dir/fmu20/src/models/test/test.c.o
-.PHONY : fmu20/src/models/test/test.c.o
-
-fmu20/src/models/test/test.i: fmu20/src/models/test/test.c.i
-
-.PHONY : fmu20/src/models/test/test.i
-
-# target to preprocess a source file
-fmu20/src/models/test/test.c.i:
-	$(MAKE) -f CMakeFiles/test_20_me.dir/build.make CMakeFiles/test_20_me.dir/fmu20/src/models/test/test.c.i
-.PHONY : fmu20/src/models/test/test.c.i
-
-fmu20/src/models/test/test.s: fmu20/src/models/test/test.c.s
-
-.PHONY : fmu20/src/models/test/test.s
-
-# target to generate assembly for a file
-fmu20/src/models/test/test.c.s:
-	$(MAKE) -f CMakeFiles/test_20_me.dir/build.make CMakeFiles/test_20_me.dir/fmu20/src/models/test/test.c.s
-.PHONY : fmu20/src/models/test/test.c.s
-
 fmu20/src/shared/parser/XmlElement.o: fmu20/src/shared/parser/XmlElement.cpp.o
 
 .PHONY : fmu20/src/shared/parser/XmlElement.o
@@ -639,13 +599,12 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... test"
-	@echo "... test_20_me"
-	@echo "... springDamper_20_me"
 	@echo "... fmusim_10_cs"
+	@echo "... springDamper_20_me"
 	@echo "... fmusim_20_cs"
 	@echo "... fmusim_10_me"
 	@echo "... fmusim_20_me"
+	@echo "... test"
 	@echo "... fmu10/src/co_simulation/main.o"
 	@echo "... fmu10/src/co_simulation/main.i"
 	@echo "... fmu10/src/co_simulation/main.s"
@@ -673,9 +632,6 @@ help:
 	@echo "... fmu20/src/models/springDamper/springDamper.o"
 	@echo "... fmu20/src/models/springDamper/springDamper.i"
 	@echo "... fmu20/src/models/springDamper/springDamper.s"
-	@echo "... fmu20/src/models/test/test.o"
-	@echo "... fmu20/src/models/test/test.i"
-	@echo "... fmu20/src/models/test/test.s"
 	@echo "... fmu20/src/shared/parser/XmlElement.o"
 	@echo "... fmu20/src/shared/parser/XmlElement.i"
 	@echo "... fmu20/src/shared/parser/XmlElement.s"
