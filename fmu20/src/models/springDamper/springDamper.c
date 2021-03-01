@@ -69,6 +69,10 @@
 // Set values for all variables that define a start value
 // Settings used unless changed by fmi2SetX before fmi2EnterInitializationMode
 void setStartValues(ModelInstance *comp) {
+    // init outputs
+    r(Ri_Fx_Mi_)   = 0;
+    r(Ri_Fy_Mi_)   = 0; 
+    r(Ri_Fz_Mi_)   = 0;
     // init inputs
     r(Ri_rx_MiMj_) = 0.;
     r(Ri_ry_MiMj_) = 0.;
@@ -136,6 +140,7 @@ void calculateValues(ModelInstance *comp) {
         F_F_Mi          = gsl_vector_alloc_3D();
         F_r_MiMj        = gsl_vector_alloc_3D();
         F_dr_MiMj       = gsl_vector_alloc_3D();
+        F_drz_MiMj      = 0;
     }
 
     // init force output with zeros
@@ -148,6 +153,12 @@ void calculateValues(ModelInstance *comp) {
     // Read input Ri_v_MiMj in array format
     gsl_vector_set_3D (r(Ri_vx_MiMj_), r(Ri_vy_MiMj_), r(Ri_vz_MiMj_), Ri_v_MiMj);
 
+    if( gsl_blas_dnrm2(Ri_r_MiMj) <= 1E-14 ){
+        FILTERED_LOG( comp, fmi2Warning, LOG_FMI_CALL, 
+            "From and to markers are at the same position, which can lead to calculation errors. ");
+        // use last calculated force //// r(Ri_Fx_Mi_) = 0; r(Ri_Fy_Mi_) = 0; r(Ri_Fz_Mi_) = 0;
+        return;
+    }
 
     /******** Calculate local frame (F) kin. *************/
     // Ri_r_MiMj_dir = Ri_r_MiMj / norm2(Ri_r_MiMj)
