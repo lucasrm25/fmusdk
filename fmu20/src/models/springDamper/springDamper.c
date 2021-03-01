@@ -154,8 +154,12 @@ void calculateValues(ModelInstance *comp) {
     gsl_vector_set_3D (r(Ri_vx_MiMj_), r(Ri_vy_MiMj_), r(Ri_vz_MiMj_), Ri_v_MiMj);
 
     if( gsl_blas_dnrm2(Ri_r_MiMj) <= 1E-14 ){
-        FILTERED_LOG( comp, fmi2Warning, LOG_FMI_CALL, 
-            "From and to markers are at the same position, which can lead to calculation errors. ");
+        // FILTERED_LOG( comp, fmi2Warning, LOG_FMI_CALL, 
+        //     "From and to markers are at the same position, which can lead to calculation errors. ");
+        comp->functions->logger(
+            comp->functions->componentEnvironment, comp->instanceName, fmi2Warning,
+            "logFmiCall", "From and to markers are at the same position, which can lead to calculation errors. " 
+        );
         // use last calculated force //// r(Ri_Fx_Mi_) = 0; r(Ri_Fy_Mi_) = 0; r(Ri_Fz_Mi_) = 0;
         return;
     }
