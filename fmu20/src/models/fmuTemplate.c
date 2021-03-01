@@ -905,12 +905,12 @@ fmi2Status fmi2GetEventIndicators(fmi2Component c, fmi2Real eventIndicators[], s
 fmi2Status fmi2GetContinuousStates(fmi2Component c, fmi2Real states[], size_t nx) {
     int i;
     ModelInstance *comp = (ModelInstance *)c;
-    if (invalidState(comp, "fmi2GetContinuousStates", MASK_fmi2GetContinuousStates))
-        return fmi2Error;
-    if (invalidNumber(comp, "fmi2GetContinuousStates", "nx", nx, NUMBER_OF_STATES))
-        return fmi2Error;
-    if (nullPointer(comp, "fmi2GetContinuousStates", "states[]", states))
-        return fmi2Error;
+    // if (invalidState(comp, "fmi2GetContinuousStates", MASK_fmi2GetContinuousStates))
+    //     return fmi2Error;
+    // if (invalidNumber(comp, "fmi2GetContinuousStates", "nx", nx, NUMBER_OF_STATES))
+    //     return fmi2Error;
+    // if (nullPointer(comp, "fmi2GetContinuousStates", "states[]", states))
+    //     return fmi2Error;
 #if NUMBER_OF_STATES>0
     for (i = 0; i < nx; i++) {
         fmi2ValueReference vr = vrStates[i];
