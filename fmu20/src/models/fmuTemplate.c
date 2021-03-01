@@ -847,12 +847,12 @@ fmi2Status fmi2SetTime(fmi2Component c, fmi2Real time) {
 fmi2Status fmi2SetContinuousStates(fmi2Component c, const fmi2Real x[], size_t nx){
     ModelInstance *comp = (ModelInstance *)c;
     int i;
-    // if (invalidState(comp, "fmi2SetContinuousStates", MASK_fmi2SetContinuousStates))
-    //     return fmi2Error;
-    // if (invalidNumber(comp, "fmi2SetContinuousStates", "nx", nx, NUMBER_OF_STATES))
-    //     return fmi2Error;
-    // if (nullPointer(comp, "fmi2SetContinuousStates", "x[]", x))
-    //     return fmi2Error;
+    if (invalidState(comp, "fmi2SetContinuousStates", MASK_fmi2SetContinuousStates))
+        return fmi2Error;
+    if (invalidNumber(comp, "fmi2SetContinuousStates", "nx", nx, NUMBER_OF_STATES))
+        return fmi2Error;
+    if (nullPointer(comp, "fmi2SetContinuousStates", "x[]", x))
+        return fmi2Error;
 #if NUMBER_OF_STATES>0
     for (i = 0; i < nx; i++) {
         fmi2ValueReference vr = vrStates[i];
@@ -905,12 +905,12 @@ fmi2Status fmi2GetEventIndicators(fmi2Component c, fmi2Real eventIndicators[], s
 fmi2Status fmi2GetContinuousStates(fmi2Component c, fmi2Real states[], size_t nx) {
     int i;
     ModelInstance *comp = (ModelInstance *)c;
-    // if (invalidState(comp, "fmi2GetContinuousStates", MASK_fmi2GetContinuousStates))
-    //     return fmi2Error;
-    // if (invalidNumber(comp, "fmi2GetContinuousStates", "nx", nx, NUMBER_OF_STATES))
-    //     return fmi2Error;
-    // if (nullPointer(comp, "fmi2GetContinuousStates", "states[]", states))
-    //     return fmi2Error;
+    if (invalidState(comp, "fmi2GetContinuousStates", MASK_fmi2GetContinuousStates))
+        return fmi2Error;
+    if (invalidNumber(comp, "fmi2GetContinuousStates", "nx", nx, NUMBER_OF_STATES))
+        return fmi2Error;
+    if (nullPointer(comp, "fmi2GetContinuousStates", "states[]", states))
+        return fmi2Error;
 #if NUMBER_OF_STATES>0
     for (i = 0; i < nx; i++) {
         fmi2ValueReference vr = vrStates[i];

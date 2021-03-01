@@ -174,13 +174,15 @@
 
     <ModelStructure>
         <Outputs>
-            <!-- outputs -->
             <Unknown index="1"/>
             <Unknown index="2"/>
             <Unknown index="3"/>
-            <!-- states derivatives -->
-            <Unknown index="20"/>
         </Outputs>
+        
+        <Derivatives>
+            <Unknown index="20"/>
+        </Derivatives>
+
         <InitialUnknowns>
             <!-- outputs -->
             <Unknown index="1"/>
