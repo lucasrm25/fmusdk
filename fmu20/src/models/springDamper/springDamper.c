@@ -74,9 +74,9 @@ void setStartValues(ModelInstance *comp) {
     r(Ri_Fy_Mi_)   = 0; 
     r(Ri_Fz_Mi_)   = 0;
     // init inputs
-    r(Ri_rx_MiMj_) = 0.;
-    r(Ri_ry_MiMj_) = 0.;
-    r(Ri_rz_MiMj_) = 0.;
+    r(Ri_rx_MiMj_) = 1.;
+    r(Ri_ry_MiMj_) = 1.;
+    r(Ri_rz_MiMj_) = 1.;
     r(Ri_vx_MiMj_) = 0.;
     r(Ri_vy_MiMj_) = 0.;
     r(Ri_vz_MiMj_) = 0.;
